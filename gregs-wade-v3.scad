@@ -20,8 +20,8 @@ wade(hotend_mount=malcolm_hotend_mount);
 //%import_stl("extruder-body.stl");
 
 //Place for printing
-//translate([78,-10,15.25])
-//rotate([0,-90,0])
+translate([78,-10,15.25])
+rotate([0,-90,0])
 
 //Place for assembly.
 wadeidler(); 

@@ -114,7 +114,8 @@ module xcarriage()
 
 holder_separation=18;
 
-gregs_x_carriage();
+//gregs_x_carriage();
+
 
 module gregs_x_carriage()
 {
@@ -158,6 +159,12 @@ color([0,0,1])
 				translate([-25-lm8uu_holder_width/2,-lm8uu_holder_length/2,-1])
 				cube([lm8uu_holder_width,lm8uu_holder_length,8]);
 			}
+
+//			belt_support_offset=25+17.5;
+		
+			for (i=[-1,1])
+			translate([-25-13.5,i*(lm8uu_holder_length/2+belt_clamp_width/2)])
+			belt_clamp_socket ();
 		}
 	
 		for (i=[0:1])
@@ -174,24 +181,37 @@ color([0,0,1])
 		for (i=[-1,1])
 		translate([-25-13.5,i*(lm8uu_holder_length/2+belt_clamp_width/2)])
 		belt_clamp_holes();
+
+		// Cable tie holes.
+		for (i=[-1,1])
+		translate([25-lm8uu_holder_width/2,(holder_separation/2+lm8uu_holder_length*0.7)*i,5])
+		rotate([0,-30,0])
+		cube([2,4,20],center=true);
 	}
-	
-#	for(i=[-1,1])
+
+	difference ()
 	{
-		translate([50/2-lm8uu_holder_width/2,
-			i*(lm8uu_holder_length+holder_separation)/2-lm8uu_holder_length/2,0])
-		render()
-		lm8uu_bearing_holder();
-	}
-#	translate([-50/2-lm8uu_holder_width/2,-lm8uu_holder_length/2,0])
-	render()
-	lm8uu_bearing_holder();
+		union ()
+		{
+		#	for(i=[-1,1])
+			{
+				translate([50/2-lm8uu_holder_width/2,
+					i*(lm8uu_holder_length+holder_separation)/2-
+					lm8uu_holder_length/2,0])
+				render()
+				lm8uu_bearing_holder();
+			}
+		#	translate([-50/2-lm8uu_holder_width/2,-lm8uu_holder_length/2,0])
+			render()
+			lm8uu_bearing_holder();
+		}
 
-	belt_support_offset=25+17.5;
-
-	for (i=[-1,1])
-	translate([-25-13.5,i*(lm8uu_holder_length/2+belt_clamp_width/2)])
-	belt_clamp_socket ();
+		// Cable tie holes.
+		for (i=[-1,1])
+		translate([25-lm8uu_holder_width/2,(holder_separation/2+lm8uu_holder_length*0.7)*i,5])
+		rotate([0,-30,0])
+		cube([2,4,20],center=true);
+	}		
 }
 
 clearance=0.7;
@@ -212,6 +232,8 @@ echo ("lm8uu_holder_width",50-lm8uu_holder_width);
 //cylinder(r=m4_nut_diameter/2,h=10,$fn=6);
 
 screw_hole_r=4/2;
+
+y_axis_holder ();
 
 module y_axis_holder()
 {
@@ -284,7 +306,7 @@ module belt_clamp_socket()
 	}
 }
 
-belt_clamp_channel();
+//belt_clamp_channel();
 
 belt_width=6;
 belt_thickness=1.5; 
@@ -332,9 +354,9 @@ module belt_clamp_holes()
 
 belt_clamp_clamp_height=tooth_height+belt_clamp_thickness*2;
 
-for (i=[-1,1])
-translate([0,i*(belt_clamp_width+2),0])
-belt_clamp();
+//for (i=[-1,1])
+//translate([0,i*(belt_clamp_width+2),0])
+//belt_clamp();
 
 module belt_clamp()
 {
