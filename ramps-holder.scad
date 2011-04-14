@@ -32,6 +32,24 @@ module endstop(hole_offset=0,endstop_width=10){
 			cube([15.5,outer_diameter,endstop_width]);
 			translate([-(screw_hole_spacing+8), 0, 0]) 
 			cube([screw_hole_spacing+8+10, 4, endstop_width]);
+
+			for(hole=[-1,1])
+			translate([-4-screw_hole_spacing/2-screw_hole_spacing/2*hole,
+				4,endstop_width/2+hole*hole_offset/2]) 
+			rotate([-90, 0, 0]) 
+			cylinder(h=1.7, r = m3_diameter/2+1, $fn = 10);
+
+			for(hole=[-1,1])
+			translate([-4-screw_hole_spacing/2-screw_hole_spacing/2*hole,
+				3.99,endstop_width/2+hole*hole_offset/2]) 
+			rotate([-90, 0, 0]) 
+			render()
+			intersection()
+			{
+			cylinder(h=1.7, r2 = m3_diameter/2+1,r1 = m3_diameter/2+2.7, $fn = 10);
+			translate([-m3_diameter/2-1,0,0])
+			cube([m3_diameter+2,endstop_width/2-hole_offset/2,1.7]);
+			}
 		}
 	
 		translate([9, outer_diameter/2-opening_size/2,-1]) 
@@ -39,14 +57,21 @@ module endstop(hole_offset=0,endstop_width=10){
 		translate([outer_diameter/2, outer_diameter/2, -1]) 
 		cylinder(h=endstop_width+2, r = m8_diameter/2, $fn = 18);
 
-		translate([17, outer_diameter+1, endstop_width/2]) rotate([90, 0, 0]) 
-		cylinder(h=outer_diameter+2, r = m3_diameter/2, $fn = 10);
+		translate([17,-1,endstop_width/2]) 
+		rotate([-90, 0, 0]) 
+		{
+			cylinder(h=outer_diameter+2, r = m3_diameter/2, $fn = 10);
+			cylinder(h=3, r = m3_nut_diameter/2, $fn = 6);
+		}
 
 		for(hole=[-1,1])
 		translate([-4-screw_hole_spacing/2-screw_hole_spacing/2*hole,
-			outer_diameter+1,endstop_width/2+hole*hole_offset/2]) 
-		rotate([90, 0, 0]) 
-		cylinder(h=outer_diameter+2, r = m3_diameter/2, $fn = 10);
+			-1,endstop_width/2+hole*hole_offset/2]) 
+		rotate([-90, 0, 0]) 
+		{
+			cylinder(h=outer_diameter+2, r = m3_diameter/2, $fn = 10);
+			cylinder(h=3, r = m3_nut_diameter/2, $fn = 6);
+		}
 	}
 }
 
