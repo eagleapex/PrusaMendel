@@ -11,12 +11,14 @@ malcolm_hotend_mount=1;
 groovemount=2;
 peek_reprapsource_mount=4;
 arcol_hotend_mount=8;//not yet supported.
+mendel_parts_v6_mount=16; 
+grrf_peek_mount_holes=32;
 
 //Set the hotend_mount to the sum of the hotends that you want the extruder to support:
 //e.g. wade(hotend_mount=groovemount+peek_reprapsource_mount);
 
 
-wade(hotend_mount=malcolm_hotend_mount);
+wade(hotend_mount=mendel_parts_v6_mount);
 //%import_stl("extruder-body.stl");
 
 //Place for printing
@@ -198,6 +200,10 @@ module wade (hotend_mount=0)
 				groovemount_holes ();
 			if (in_mask (hotend_mount,peek_reprapsource_mount))
 				peek_reprapsource_holes ();
+			if (in_mask (hotend_mount,mendel_parts_v6_mount)) 
+				mendel_parts_v6_hotend ();
+			if (in_mask(hotend_mount,grrf_peek_mount_holes))
+				grrf_peek_mount_holes();
 		}
 	}
 }
@@ -567,4 +573,50 @@ module peek_reprapsource_holes ()
 	translate([0,0,min(extruder_recess_h/2, base_thickness)])
 	rotate([-90,0,0])
 	cylinder(r=m4_diameter/2-0.5/* tight */,h=wade_block_depth+2,center=true); 
+}
+
+module mendel_parts_v6_hotend () 
+{
+	extruder_recess_d=12.4;
+	extruder_recess_h=10; 
+	hole_axis_rotation=42.5; 
+	hole_separation=30;
+	hole_slot_height=5;
+	
+	// Recess in base
+	translate([0,0,-1])
+	cylinder(r=extruder_recess_d/2,h=extruder_recess_h+1); 
+	
+	for(mount=[-1,1])
+	rotate([0,0,-hole_axis_rotation+90+90*mount])
+	translate([hole_separation/2,0,0])
+	{
+		translate([0,0,-1])
+		cylinder(r=m4_diameter/2,h=base_thickness+2,$fn=8);
+
+		translate([0,0,base_thickness/2])
+		rotate(hole_axis_rotation)
+		{
+//			rotate(30)
+			cylinder(r=m4_nut_diameter/2,h=base_thickness/2+hole_slot_height,$fn=6);
+			translate([0,-m4_nut_diameter,hole_slot_height/2+base_thickness/2]) 
+			cube([m4_nut_diameter,m4_nut_diameter*2,hole_slot_height],
+					center=true);
+		}
+	}
+}
+
+module grrf_peek_mount_holes()  
+{  
+	extruder_recess_d=16.5;
+	extruder_recess_h=10;
+
+	// Recess in base
+	translate([0,0,-1])
+	cylinder(r=extruder_recess_d/2,h=extruder_recess_h+1);
+	
+	for (hole=[-1,1])
+	rotate(90,[1,0,0])
+	translate([hole*(extruder_recess_d/2-1.5),3+1.5,-wade_block_depth/2-1])
+	cylinder(r=1.5,h=wade_block_depth+2,$fn=10);
 }
