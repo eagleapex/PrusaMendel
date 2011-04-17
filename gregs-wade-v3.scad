@@ -22,11 +22,11 @@ wade(hotend_mount=mendel_parts_v6_mount);
 //%import_stl("extruder-body.stl");
 
 //Place for printing
-translate([78,-10,15.25])
-rotate([0,-90,0])
+//translate([78,-10,15.25])
+//rotate([0,-90,0])
 
 //Place for assembly.
-wadeidler(); 
+//wadeidler(); 
 
 //import_stl("idler.stl");
 
@@ -454,11 +454,11 @@ module wadeidler()
 		//Fulcrum hole.
 		translate(idler_fulcrum)
 		rotate(360/12)
-		cylinder(h=idler_short_side+2,r=m3_diameter/2,center=true,$fn=6);
+		cylinder(h=idler_short_side+2,r=m3_diameter/2-0.1,center=true,$fn=8);
 
 		//Nut trap for fulcrum screw.
 		translate(idler_fulcrum+[0,0,idler_short_side/2-idler_hinge_width-1])
-		rotate(360/12)
+		rotate(360/16)
 		cylinder(h=3,r=m3_nut_diameter/2,$fn=6);
 
 		for(idler_screw_hole=[-1,1])
@@ -577,7 +577,7 @@ module peek_reprapsource_holes ()
 
 module mendel_parts_v6_hotend () 
 {
-	extruder_recess_d=12.4;
+	extruder_recess_d=13.4;
 	extruder_recess_h=10; 
 	hole_axis_rotation=42.5; 
 	hole_separation=30;

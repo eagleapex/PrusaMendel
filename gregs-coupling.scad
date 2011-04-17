@@ -60,7 +60,79 @@ module coupling()
 	}
 }
 
-intersection()
+//coupling();
+
+coupling2();
+
+/**
+ * @name Coupling
+ * @category Printed
+ * @using 1 m3x25
+ * @using 1 m3nut
+ * @using 2 m3washer
+ */
+module coupling2()
 {
-	coupling();
+	difference()
+	{
+		union()
+		{
+		render()
+		difference ()
+		{
+			intersection()
+			{
+				cylinder($fn=80,r=m8_nut_diameter/2+7.7,h=15);
+				cylinder($fn=6,r=m8_nut_diameter/2+9,h=15);
+			}
+			translate([0,0,-1])
+			cylinder(r=m8_nut_diameter/2+1,$fn=6,h=12);
+		}
+
+		translate([0,0,15])
+		render()
+		intersection ()
+		{
+			union()
+			{
+				cylinder(h = 15, r=7);
+				translate(v = [0, 6, 7.5]) cube(size = [14,12,15], center = true);
+			}
+			translate([0,0,-1])
+			cylinder(r=12.3,h=32);
+		}
+		}
+		
+		// inside diameter
+		translate(v = [0, 0, 15])cylinder(h = 16, r=motor_shaft/2, $fn=16);
+		
+		// screw holes
+		rotate ([0,0,90]) translate(v = [6.5, 15, 7.5+15]) rotate ([90,0,0]) 
+		cylinder(h = 30, r=m3_diameter/2, $fn=16);
+		rotate ([0,0,90]) translate(v = [6.5, 12-2, 7.5+15]) rotate ([90,0,0]) 
+		cylinder(h = 5, r=m3_nut_diameter/2, $fn=6);
+		rotate ([0,0,90]) translate(v = [6.5, 12-14-5+2, 7.5+15]) rotate ([90,0,0]) 
+		cylinder(h = 5, r=m3_nut_diameter/2+0.1, $fn=16);
+
+		//setscrews.
+		for (hole=[0:2])
+		translate([0,0,6])
+		rotate(hole*120)
+		rotate([90,0,0])
+		translate([0,0,m8_nut_diameter/2*cos(30)])
+		{
+			cylinder(r=m3_diameter/2,h=14);
+			cylinder(r=m3_nut_diameter/2,h=4,$fn=6);
+		}
+		//main cut
+		translate(v = [0, 10, 8+15]) cube(size = [2,20,16], center = true);
+		
+		//difference cut
+#		render()intersection ()
+		{
+		translate(v = [0, 7, 15.5])  cube(size = [20,8,1], center = true);
+		translate([0,0,14.5])
+		cylinder(r=11.5,h=3);
+		}
+	}
 }
