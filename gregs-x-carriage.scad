@@ -20,6 +20,15 @@ include <configuration.scad>
  * @using 4 bushing
  */ 
 
+for (i=[-1,1])
+translate([0,i*(belt_clamp_width+2),0])
+belt_clamp();
+
+belt_clamp_channel();
+
+//%xcarriage();
+
+//gregs_x_carriage();
 
 
 module xcarriage()
@@ -110,11 +119,7 @@ module xcarriage()
 	}}
 }
 
-//%xcarriage();
-
 holder_separation=18;
-
-//gregs_x_carriage();
 
 
 module gregs_x_carriage()
@@ -233,7 +238,7 @@ echo ("lm8uu_holder_width",50-lm8uu_holder_width);
 
 screw_hole_r=4/2;
 
-y_axis_holder ();
+//y_axis_holder ();
 
 module y_axis_holder()
 {
@@ -306,8 +311,6 @@ module belt_clamp_socket()
 	}
 }
 
-//belt_clamp_channel();
-
 belt_width=6;
 belt_thickness=1.5; 
 tooth_height=1.5;
@@ -354,9 +357,6 @@ module belt_clamp_holes()
 
 belt_clamp_clamp_height=tooth_height+belt_clamp_thickness*2;
 
-//for (i=[-1,1])
-//translate([0,i*(belt_clamp_width+2),0])
-//belt_clamp();
 
 module belt_clamp()
 {

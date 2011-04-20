@@ -38,20 +38,20 @@ module pulley()
 		}
 	
 	   	//shaft hole
-		translate([0,0,-1])cylinder(r=motor_shaft/2+0.1,h=22,$fn=15);
+		translate([0,0,-1])cylinder(r=motor_shaft/2+0.1-0.25,h=22,$fn=15);
 	
 		//captive nut and grub holes
-		for(j=[1:1]) rotate([0,0,j*(360/3)])
-		translate([0,20,4])rotate([90,0,0])
-		union()
-		{
-			//entrance
-			translate([0,-3,15]) cube([8.6,7,3],center=true);
-			//nut
-			translate([0,0,13.6]) rotate([0,0,30])cylinder(r=4.22,h=2.8,$fn=6);
-			//grub hole
-			translate([0,0,9]) cylinder(r=1.9,h=10);
-		}
+//		for(j=[1:1]) rotate([0,0,j*(360/3)])
+//		translate([0,20,4])rotate([90,0,0])
+//		union()
+//		{
+//			//entrance
+//			translate([0,-3,15]) cube([8.6,7,3],center=true);
+//			//nut
+//			translate([0,0,13.6]) rotate([0,0,30])cylinder(r=4.22,h=2.8,$fn=6);
+//			//grub hole
+//			translate([0,0,9]) cylinder(r=1.9,h=10);
+//		}
 	}
 }
 
@@ -59,8 +59,9 @@ module pulley()
 //translate([0,0,-1])
 //%import_stl("pulley.stl");
 
-//difference()
-//{
+difference()
+{
 pulley();
-//cube([27,27,17],true);
-//}
+translate([0,0,-3])
+cube([27,27,17],true);
+}
