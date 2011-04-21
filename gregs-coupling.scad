@@ -82,15 +82,15 @@ module coupling2()
 		{
 			intersection()
 			{
-				cylinder($fn=80,r=m8_nut_diameter/2+7.7,h=15);
-				cylinder($fn=6,r=m8_nut_diameter/2+9,h=15);
+				cylinder($fn=80,r=m8_nut_diameter/2+6.7,h=15);
+				cylinder($fn=6,r=m8_nut_diameter/2+8,h=15);
 			}
 			translate([0,0,-1])
 			cylinder(r=m8_nut_diameter/2+1,$fn=6,h=12);
 
 			for (chamfer=[0:5])
 			rotate(chamfer*60)
-			translate([-10,(m8_nut_diameter/2+9)*cos(30)-5,15-5])
+			translate([-10,(m8_nut_diameter/2+8)*cos(30)-5,15-5])
 			difference()
 			{
 				cube([20,6,6]);
@@ -101,16 +101,17 @@ module coupling2()
 		}
 
 		translate([0,0,15])
-		render()
+#		render()
 		intersection ()
 		{
+			translate([0,0,-3])
 			union()
 			{
-				cylinder(h = 15, r=7);
-				translate(v = [0, 6, 7.5]) cube(size = [14,12,15], center = true);
+				cylinder(h = 18, r=7);
+				translate(v = [0, 6, 7.5]) cube(size = [14,12,21], center = true);
 			}
 			translate([0,0,-1])
-			cylinder(r=12.3,h=32);
+			cylinder(r=11.8,h=32);
 		}
 		}
 		
@@ -118,12 +119,12 @@ module coupling2()
 		translate(v = [0, 0, 15])cylinder(h = 16, r=motor_shaft/2, $fn=16);
 		
 		// screw holes
-		rotate ([0,0,90]) translate(v = [6.5, 15, 7.5+15]) rotate ([90,0,0]) 
+		rotate ([0,0,90]) translate(v = [6, 15, 7.5+15]) rotate ([90,0,0]) 
 		rotate(360/16)
 		cylinder(h = 30, r=m3_diameter/2, $fn=8);
-		rotate ([0,0,90]) translate(v = [6.5, 12-2, 7.5+15]) rotate ([90,0,0]) 
+		rotate ([0,0,90]) translate(v = [6, 12-2, 7.5+15]) rotate ([90,0,0]) 
 		cylinder(h = 5, r=m3_nut_diameter/2, $fn=6);
-		rotate ([0,0,90]) translate(v = [6.5, 12-14-5+2, 7.5+15]) rotate ([90,0,0]) 
+		rotate ([0,0,90]) translate(v = [6, 12-14-5+2, 7.5+15]) rotate ([90,0,0]) 
 		cylinder(h = 5, r=m3_nut_diameter/2+0.1, $fn=16);
 
 		//setscrews.
@@ -145,7 +146,7 @@ module coupling2()
 		{
 			translate(v = [0, 7, 15.5])  cube(size = [20,8,1], center = true);
 			translate([0,0,14.5])
-			cylinder(r=11.5,h=3);
+			cylinder(r=11,h=3);
 		}
 	}
 }
