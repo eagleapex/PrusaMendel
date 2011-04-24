@@ -46,6 +46,9 @@ module ybract()
 			//gap fill.
 			translate([12,10,0])
 #			cylinder(r=10,h=thickness);
+			//gap fill.
+			translate([30,40,0])
+#			cylinder(r=5,h=thickness);
 
 			rotate(atan2(top_rod_position[1],top_rod_position[0]))
 			linear_extrude(height=thickness)
