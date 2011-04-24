@@ -20,6 +20,10 @@ include <configuration.scad>
  * @using 4 bushing
  */ 
 
+belt_clamp_thickness=2;
+belt_clamp_width=m3_diameter+3*belt_clamp_thickness;
+
+
 for (i=[-1,1])
 translate([0,i*(belt_clamp_width+2),0])
 belt_clamp();
@@ -28,7 +32,7 @@ belt_clamp_channel();
 
 //%xcarriage();
 
-//gregs_x_carriage();
+gregs_x_carriage();
 
 
 module xcarriage()
@@ -288,12 +292,10 @@ module lm8uu_bearing_holder()
 	}
 }
 
-belt_clamp_thickness=2;
 belt_clamp_hole_separation=10;
 
 belt_clamp_height=m3_diameter+2*belt_clamp_thickness;
 belt_clamp_length=belt_clamp_hole_separation+m3_diameter+2*belt_clamp_thickness;
-belt_clamp_width=m3_diameter+3*belt_clamp_thickness;
 
 module belt_clamp_socket()
 {
