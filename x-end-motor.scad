@@ -56,6 +56,11 @@ module xend_nema17()
 	}
 }
 
+endstop_thickness=4; 
+endstop_w=10;
+endstop_l=14;
+endstop_h=10;
+
 module xendmotor()
 {
 	difference ()
@@ -68,6 +73,30 @@ module xendmotor()
 			//xend_nema17();
 		
 			positioned_motor_mount();
+			
+			// Endstop mount 
+//			translate(v = -[0,17,24.5]) 
+			translate([-35-2,-25,15.75])
+			difference()
+			{
+				translate([2,0,0])
+				cube([endstop_w+endstop_thickness-2,
+				endstop_l+endstop_thickness,
+				endstop_h+endstop_thickness]);
+				translate([-1,-1,endstop_thickness])
+				cube([endstop_w+1,
+				endstop_l+1,
+				endstop_h+1]);
+				
+				translate([endstop_w-1,endstop_l-1-m3_diameter/2,m3_diameter/2+1+endstop_thickness])
+				rotate([0,90,0])
+				rotate(360/16)
+				{
+					cylinder(r=m3_diameter/2,h=endstop_thickness+2,$fn=8);
+					translate([0,0,endstop_thickness+2-3])
+					cylinder(r=m3_nut_diameter/2,h=3,$fn=6);
+				}
+			}			
 		}
 		positioned_motor_mount_holes();
 	}

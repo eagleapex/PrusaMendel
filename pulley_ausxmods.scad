@@ -59,9 +59,18 @@ module pulley()
 //translate([0,0,-1])
 //%import_stl("pulley.stl");
 
-difference()
+module ausxmods()
 {
-pulley();
-translate([0,0,-3])
-cube([27,27,17],true);
+	translate([0,0,-17/2+3])
+	difference()
+	{
+		pulley();
+		translate([0,0,-3])
+		cube([27,27,17],true);
+
+		translate([0,0,27])
+		cube([27,27,17],true);
+	}
 }
+
+ausxmods ();

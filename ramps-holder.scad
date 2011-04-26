@@ -17,7 +17,7 @@ include <configuration.scad>
  * @using 1 m3nut
  * @using 2 m3washer
  */
-module endstop(hole_offset=0,endstop_width=10){
+module ramps_holder(hole_offset=0,endstop_width=10){
 	outer_diameter= m8_diameter+3.3*2;
 	screw_hole_spacing=48.26;
 	opening_size = m8_diameter-1.5; //openingsize
@@ -75,6 +75,11 @@ module endstop(hole_offset=0,endstop_width=10){
 	}
 }
 
-endstop(hole_offset=0,endstop_width=10);
-translate([0,20,0])
-endstop(hole_offset=6.35,endstop_width=14);
+module rampsholder()
+{
+	ramps_holder(hole_offset=0,endstop_width=10);
+	translate([0,18,0])
+	ramps_holder(hole_offset=6.35,endstop_width=14);
+}
+
+rampsholder();
