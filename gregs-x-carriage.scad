@@ -202,7 +202,7 @@ color([0,0,1])
 	{
 		union ()
 		{
-		#	for(i=[-1,1])
+			for(i=[-1,1])
 			{
 				translate([50/2-lm8uu_holder_width/2,
 					i*(lm8uu_holder_length+holder_separation)/2-
@@ -210,16 +210,22 @@ color([0,0,1])
 				render()
 				lm8uu_bearing_holder();
 			}
-		#	translate([-50/2-lm8uu_holder_width/2,-lm8uu_holder_length/2,0])
+			translate([-50/2-lm8uu_holder_width/2,-lm8uu_holder_length/2,0])
 			render()
 			lm8uu_bearing_holder();
 		}
 
 		// Cable tie holes.
-		for (i=[-1,1])
+#		for (i=[-1,1])
 		translate([25-lm8uu_holder_width/2,(holder_separation/2+lm8uu_holder_length*0.7)*i,5])
 		rotate([0,-30,0])
 		cube([2,4,20],center=true);
+
+#		for (i=[-1,1])
+		translate([-25+lm8uu_holder_width/2,6.5*i,5])
+		rotate([0,30,0])
+		translate([2,0,0])
+		cube([6,4,20],center=true);
 	}		
 }
 
