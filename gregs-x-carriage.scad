@@ -412,6 +412,35 @@ module barbell (x1,x2,r1,r2,r3,r4)
 	}
 }
 
+//translate([0,-50,0])
+//fan_mount();
+
+fan_hole_separation=36;
+fan_support_block=10;
+fan_trap_depth=2;
+fan_support_thickness=4;
+
+
+
+module fan_mount()
+{
+	for(i=[-1,1])
+	{
+		translate([i*fan_hole_separation/2,0,fan_support_block/2])
+		difference ()
+		{
+			cube([fan_support_block,fan_support_thickness,fan_support_block],center=true);
+			rotate([90,0,0])
+			cylinder(r=m3_diameter/2,h=fan_support_thickness+2,center=true,$fn=6);
+
+			
+			rotate([-90,0,0])
+			rotate(360/12)
+			cylinder(r=m3_nut_diameter/2,h=fan_trap_depth+1,$fn=6);
+		}
+	}
+}
+
 function triangulate (point1, point2, length1, length2) = 
 point1 + 
 length1*rotated(
