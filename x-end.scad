@@ -26,30 +26,15 @@ translate(v = [-25, -40, -16.6])
 {
 	cube(size = [20,40,15.8], center = true);
 	translate([0,20,0])
-	cylinder(r=5,h=15.8,center=true);
+	cylinder(r=6,h=15.8,center=true);
 }
 translate(v = [25, -40, -16.6])
 {
 	cube(size = [20,40,15.8], center = true);
 	translate([0,20,0])
-	cylinder(r=5,h=15.8,center=true);
+	cylinder(r=6,h=15.8,center=true);
 }
 }
-
-//nut traps
-//translate(v = [-25, -29, -19.7]) cylinder(h = 7, r=m3_nut_diameter/2, $fn=6, center=true);
-//translate(v = [-25, -29, -20]) cylinder(h = 10, r=m3_diameter/2, $fn=9, center=true);
-//translate(v = [25, -29, -19.7]) cylinder(h = 7, r=m3_nut_diameter/2, $fn=6, center=true);
-//translate(v = [25, -29, -20]) cylinder(h = 10, r=m3_diameter/2, $fn=9, center=true);
-
-//translate(v = [-25, -50, -19.7]) cylinder(h = 7, r=m3_nut_diameter/2, $fn=6, center=true);
-//translate(v = [-25, -50, -20]) cylinder(h = 10, r=m3_diameter/2, $fn=9, center=true);
-//translate(v = [25, -50, -19.7]) cylinder(h = 7, r=m3_nut_diameter/2, $fn=6, center=true);
-//translate(v = [25, -50, -20]) cylinder(h = 10, r=m3_diameter/2, $fn=9, center=true);
-
-
-
-
 
 //holes for axis
 translate(v = [-25, -23, -16.7]) rotate(a=[90,0,0]) 
@@ -67,7 +52,7 @@ translate(v = [-25, -23, -16.7]) rotate(a=[90,0,0])
 			translate([1,0,-0.5])
 			cylinder(r=m3_diameter/2,h=20);
 			rotate([0,-90,0])
-			translate([1,0,-0.5])
+			translate([1,0,0])
 			rotate(360/12)
 			cylinder(r=m3_nut_diameter/2,h=3,$fn=6);
 }
@@ -98,7 +83,7 @@ union ()
 			translate([1,0,-0.5])
 			cylinder(r=m3_diameter/2,h=20);
 			rotate([0,-90,0])
-			translate([1,0,-0.5])
+			translate([1,0,0])
 			rotate(360/12)
 			cylinder(r=m3_nut_diameter/2,h=3,$fn=6);
 }
