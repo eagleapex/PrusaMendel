@@ -18,7 +18,13 @@ corection = 1.17;
  * @using 2 m8nut
  */ 
 use <x-end.scad>
+use <bushing.scad>
+
 module xendidler(){
+difference()
+{
+union()
+{
 	xend(shroud_height=40);
 	translate(v = [0, 0, 12.5]){
 		mirror(){
@@ -33,8 +39,9 @@ module xendidler(){
 		}
 	}
 }
-difference(){
-xendidler();
 xendcorners(5,5,5,5,0);
 }
+}
+
+xendidler();
 

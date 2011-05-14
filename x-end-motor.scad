@@ -99,14 +99,11 @@ module xendmotor()
 			}			
 		}
 		positioned_motor_mount_holes();
+		xendcorners(5,0,5,5,0);
 	}
 }
 
-difference()
-{
-	xendmotor();
-	xendcorners(5,0,5,5,0);
-}
+xendmotor();
 
 nema17_hole_spacing=1.2*25.4; 
 nema17_width=1.7*25.4;
