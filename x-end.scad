@@ -52,9 +52,9 @@ translate(v = [-25, -23, -16.7]) rotate(a=[90,0,0])
 			translate([1,0,-0.5])
 			cylinder(r=m3_diameter/2,h=20);
 			rotate([0,-90,0])
-			translate([1,0,0])
+			translate([1,0,-1])
 			rotate(360/12)
-			cylinder(r=m3_nut_diameter/2,h=3,$fn=6);
+			cylinder(r=m3_nut_diameter/2,h=4,$fn=6);
 }
 
 			//substracting friction pad
@@ -83,9 +83,9 @@ union ()
 			translate([1,0,-0.5])
 			cylinder(r=m3_diameter/2,h=20);
 			rotate([0,-90,0])
-			translate([1,0,0])
+			translate([1,0,-1])
 			rotate(360/12)
-			cylinder(r=m3_nut_diameter/2,h=3,$fn=6);
+			cylinder(r=m3_nut_diameter/2,h=4,$fn=6);
 }
 			//substracting friction pad
 			translate(v = [0, -axis_diameter_larger, (-axis_diameter_larger-10)-(axis_diameter_real-pressure_pad_height)]) cube(size = [33,axis_diameter_larger*2,axis_diameter_larger+10]);

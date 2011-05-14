@@ -32,11 +32,11 @@ union ()
 	barclamp();
 
 
-	translate([36,18,0]) 
-	ausxmods();
-
-	translate([50,60,0]) 
-	ausxmods();
+//	translate([36,18,0]) 
+//	ausxmods();
+//
+//	translate([50,60,0]) 
+//	ausxmods();
 
 	ybract();
 

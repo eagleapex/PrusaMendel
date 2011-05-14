@@ -24,7 +24,7 @@ dovetail_height=8;
 dovetail_width=9;
 arm_width=15;
 arm_stub_length=12;
-slot_width=10;
+slot_width=9.2;
 
 ball_facets=20;
 bearing_facets=80;
@@ -36,22 +36,38 @@ race_outside_height=race_inside_height+bearing_support_thickness;
 race_radius=ball_translation+ball_diameter/2+bearing_slop/2+bearing_support_thickness;
 race_inside_radius=ball_translation+ball_diameter/3;
 
-race ();
-hub();
-translate((race_radius+race_inside_radius)/sqrt(2)*[-1,-1,0])
-hub();
-
-translate([-40,10])
-rotate(30)
-balls();
-
-//for(i=[-1:-3])
-//translate([0,i*(arm_width+2),0])
-//cross_piece();
+//race ();
+//hub();
+//translate((race_radius+race_inside_radius)/sqrt(2)*[-1,-1,0])
+//hub();
 //
-//for(i=[0:5])
-//translate([0,i*(arm_width+2),0])
-//spoke();
+//translate([-40,10])
+//rotate(30)
+//balls();
+
+for(i=[-1:-3])
+translate([0,i*(arm_width+2),0])
+cross_piece();
+
+for(i=[0:5])
+translate([0,i*(arm_width+2),0])
+spoke();
+
+//test_dovetail ();
+
+module test_dovetail ()
+{
+	dovetail(height=dovetail_height,width=dovetail_width,male=false);
+
+	translate([0,2*dovetail_width,0])
+	difference ()
+	{
+	translate([0.5*dovetail_width,0,0])
+	cube([dovetail_width,dovetail_width*1.5,dovetail_height],center=true);
+	dovetail(height=dovetail_height+2,width=dovetail_width+0.5,male=false);
+	}
+	
+}
 
 module balls()
 {
@@ -65,6 +81,7 @@ module balls()
 		cube([ball_diameter+1,ball_diameter+1,ball_diameter],center=true);
 	}
 }
+
 module race()
 {
 	translate([0,0,race_outside_height/2])
@@ -87,7 +104,7 @@ module race()
 		translate([-ball_translation-ball_diameter/2-bearing_slop-arm_stub_length/2,0,0])
 		cube([arm_stub_length,arm_width,dovetail_height],center=true);
 		translate([-ball_translation-ball_diameter/2-bearing_slop-arm_stub_length,0,0])
-		dovetail(height=dovetail_height+2,width=dovetail_width,male=false);
+		dovetail(height=dovetail_height+2,width=dovetail_width+0.5,male=false);
 	}
 }
 
@@ -131,9 +148,9 @@ l=145;
 		translate([-l/2,0,0])
 		cube([l,arm_width,dovetail_height],true);
 		rotate(180)
-		dovetail(height=dovetail_height+2,width=dovetail_width,male=false);
+		dovetail(height=dovetail_height+2,width=dovetail_width+0.5,male=false);
 		translate([-l,0,0])
-		dovetail(height=dovetail_height+2,width=dovetail_width,male=false);
+		dovetail(height=dovetail_height+2,width=dovetail_width+0.5,male=false);
 
 		translate([-l/2,0,0])
 		cube([l-30,slot_width,dovetail_height+2],true);
@@ -158,14 +175,15 @@ slat=105;
 
 	difference()
 	{
-union()
-{
-	dovetail(height=dovetail_height,width=dovetail_width,male=false);
-	translate([-l/2,0,0])
-	cube([l,arm_width,dovetail_height],true);	
-	translate([-l,0,0])
-	cylinder(r=arm_width/2,h=dovetail_height,center=true);
-}
+	union()
+	{
+		dovetail(height=dovetail_height,width=dovetail_width,male=false);
+		translate([-l/2,0,0])
+		cube([l,arm_width,dovetail_height],true);	
+		translate([-l,0,0])
+		cylinder(r=arm_width/2,h=dovetail_height,center=true);
+	}
+
 	translate([-l,0,0])
 	cylinder(r=slot_width/2,h=dovetail_height+2,center=true);
 
@@ -194,13 +212,4 @@ union()
 	translate([-dovetail_height,-arm_width/2,-3*dovetail_height/2])
 	cube([dovetail_height,arm_width,dovetail_width+dovetail_height]);
 	}
-
-//	translate([0,18,0])
-//	difference()
-//	{
-//	translate([-l/2,0,0])
-//	cube([l,arm_width,dovetail_height],true);	
-//	rotate(180)
-//	dovetail(height=dovetail_height+2,width=dovetail_width,male=false);
-//	}
 }
