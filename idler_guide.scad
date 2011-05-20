@@ -15,9 +15,10 @@ include <configuration.scad>
 b608_diameter=22;
 b608_height=9;
 wall_height=5;
-z_thickness=1.2;
+z_thickness=1.4;
 thickness=1;
 outer_radius=b608_diameter/2+wall_height+thickness;
+membrane=0.6;
 
 module idler_guide()
 {
@@ -42,14 +43,14 @@ module top_support()
 	{
 		difference()
 		{
-			cylinder(r=outer_radius+4,h=b608_height-z_thickness+0.4);
-			translate([0,0,-1])
-			cylinder(r=outer_radius+1,h=b608_height-z_thickness+1);
+			cylinder(r=outer_radius+4,h=b608_height-z_thickness+membrane);
+			translate([0,0,-membrane])
+			cylinder(r=outer_radius+1,h=b608_height-z_thickness+membrane);
 			translate([0,0,-1])
 			cylinder(r=b608_diameter/2,h=b608_height+2);
 		}
-		translate([-(outer_radius+4),-outer_radius,-1])
-		cube([2*(outer_radius+4),outer_radius*2,b608_height-z_thickness+0.4+2]);
+		translate([-(outer_radius+4),-outer_radius,-1]) 
+		cube([2*(outer_radius+4),outer_radius*2,b608_height-z_thickness+membrane+2]);
 	}
 }
 

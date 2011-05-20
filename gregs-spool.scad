@@ -21,10 +21,11 @@ bearing_gap=1.5;
 shaft_diameter=8;
 
 dovetail_height=8;
+
 dovetail_width=9;
 arm_width=15;
 arm_stub_length=12;
-slot_width=9.2;
+slot_width=9.9;
 
 ball_facets=20;
 bearing_facets=80;
@@ -36,6 +37,10 @@ race_outside_height=race_inside_height+bearing_support_thickness;
 race_radius=ball_translation+ball_diameter/2+bearing_slop/2+bearing_support_thickness;
 race_inside_radius=ball_translation+ball_diameter/3;
 
+//bushing_race ();
+
+spoke();
+
 //race ();
 //hub();
 //translate((race_radius+race_inside_radius)/sqrt(2)*[-1,-1,0])
@@ -45,13 +50,13 @@ race_inside_radius=ball_translation+ball_diameter/3;
 //rotate(30)
 //balls();
 
-for(i=[-1:-3])
-translate([0,i*(arm_width+2),0])
-cross_piece();
-
-for(i=[0:5])
-translate([0,i*(arm_width+2),0])
-spoke();
+//for(i=[-1:-3])
+//translate([0,i*(arm_width+2),0])
+//cross_piece();
+//
+//for(i=[0:5])
+//translate([0,i*(arm_width+2),0])
+//spoke();
 
 //test_dovetail ();
 
@@ -94,6 +99,54 @@ module race()
 			cylinder(r=race_inside_radius,h=race_outside_height+2,center=true,$fn=bearing_facets);
 		}
 		raceway();
+	}
+
+	for(arm=[0:2])
+	rotate(arm*360/3)
+	translate([0,0,dovetail_height/2])
+	difference()
+	{
+		translate([-ball_translation-ball_diameter/2-bearing_slop-arm_stub_length/2,0,0])
+		cube([arm_stub_length,arm_width,dovetail_height],center=true);
+		translate([-ball_translation-ball_diameter/2-bearing_slop-arm_stub_length,0,0])
+		dovetail(height=dovetail_height+2,width=dovetail_width+0.5,male=false);
+	}
+}
+
+module bushing_race()
+{
+	bushing_inner_diameter=21.5;
+	bushing_clearance=0.5;
+	bushing_support_thickness=5;
+
+	difference ()
+	{
+		union()
+		{
+			cylinder(r1=bushing_inner_diameter/2+(dovetail_height/2)*cos(60),
+				r2=bushing_inner_diameter/2,
+				h=dovetail_height/2,$fn=bearing_facets);
+			translate([0,0,dovetail_height/2])
+			cylinder(r2=bushing_inner_diameter/2+(dovetail_height/2)*cos(60),
+				r1=bushing_inner_diameter/2,
+				h=dovetail_height/2,$fn=bearing_facets);
+		}
+
+		translate([0,0,-1])
+		cylinder(r=8/2+0.25,h=dovetail_height+2);
+	}
+
+	difference()
+	{
+		cylinder(r=bushing_inner_diameter/2+bushing_clearance+(dovetail_height/2)*cos(45)+bushing_support_thickness,h=dovetail_height);
+
+		cylinder(r1=bushing_inner_diameter/2+bushing_clearance+(dovetail_height/2)*cos(45),
+			r2=bushing_inner_diameter/2+bushing_clearance,
+			h=dovetail_height/2,$fn=bearing_facets);
+		translate([0,0,dovetail_height/2])
+		cylinder(r2=bushing_inner_diameter/2+bushing_clearance+(dovetail_height/2)*cos(45),
+			r1=bushing_inner_diameter/2+bushing_clearance,
+			h=dovetail_height/2,$fn=bearing_facets);
 	}
 
 	for(arm=[0:2])
