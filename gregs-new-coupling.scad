@@ -31,7 +31,7 @@ cup_base_thickness=3;
 cup_clearance=0.25;
 cup_walls=2;
 cup_inner_diameter=(surround_outer_d*cos(15)+2*cup_clearance)/cos(15);
-cup_outer_diameter=cup_inner_diameter+cup_walls*2;
+cup_outer_diameter=(cup_inner_diameter*cos(15)+cup_walls*2)/cos(15);
 cup_height=cup_base_thickness+washer_thickness+surround_nut_height+m3_diameter/2+3.5;
 
 coupling();
@@ -42,7 +42,8 @@ module coupling_cup()
 {
 	difference()
 	{
-		cylinder(r=cup_outer_diameter/2,h=cup_height,$fn=100);
+		rotate(180/12)
+		cylinder(r=cup_outer_diameter/2,h=cup_height,$fn=12);
 		rotate(180/12)
 		translate([0,0,cup_base_thickness])
 		cylinder(r=cup_inner_diameter/2,h=cup_height-cup_base_thickness+1,$fn=12);
