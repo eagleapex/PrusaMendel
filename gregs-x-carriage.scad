@@ -30,101 +30,9 @@ belt_clamp();
 
 belt_clamp_channel();
 
-//%xcarriage();
-
 gregs_x_carriage();
 
-
-module xcarriage()
-{
-	translate(v = [0,0,2.5]) union(){difference(){
-	union()
-	{
-		//Base block
-			cube(size = [70,70,5], center = true);
-		//Nut holder base - extruder
-			translate(v = [0, 0, 1]) cube(size = [12,70,7], center = true);
-			translate(v = [0, -6, 1]) cube(size = [70,12,7], center = true);
-
-		//Nut holder base - belt clamps
-		translate(v = [33-(7.5/2), -18, 1]) cube(size = [45-7.5,15,7], center = true);
-		translate(v = [33+45/2-7.5, -18, 1]) cylinder(h = 7, r=7.5, $fn=18, center=true);
-		translate(v = [33-(7.5/2), 18, 1]) cube(size = [45-7.5,15,7], center = true);
-		translate(v = [33+45/2-7.5, 18, 1]) cylinder(h = 7, r=7.5, $fn=18, center=true);
-
-		//Bushing holder
-		translate(v = [-25, 30, 5])cube(size = [26,10,15], center = true);
-		translate(v = [-25, -30, 5])cube(size = [26,10,15], center = true);
-		translate(v = [25, -30, 5])cube(size = [26,10,15], center = true);
-		translate(v = [25, 30, 5])cube(size = [26,10,15], center = true);
-		
-		// fan holder
-		translate(v = [-25, 20, 2])  cube(size = [20,10,9], center = true);
-		translate(v = [-25, -20, 2]) cube(size = [20,10,9], center = true);
-
-	}
-	translate([0,42])cylinder(r=14,h=10,center=true,$fn=6);
-	//main cutout
-	translate(v = [-12.5,0,0]) cube(size = [5,50,10], center = true);
-
-	translate(v = [25, 30.4, 12]) rotate(a=[90,0,0]) 
-	cylinder(h = 11, r=18/2, $fn=12, center=true);
-	translate(v = [25, 30.4, 7.5])cube(size = [18,11,9], center = true);
-	translate(v = [-25, 30.4, 12]) rotate(a=[90,0,0]) 
-	cylinder(h = 11, r=18/2, $fn=12, center=true);
-	translate(v = [-25, 30.4, 7.5])cube(size = [18,11,9], center = true);
-	translate(v = [25, -30.4, 12]) rotate(a=[90,0,0]) 
-	cylinder(h = 11, r=18/2, $fn=12, center=true);
-	translate(v = [25, -30.4, 7.5])cube(size = [18,11,9], center = true);
-	translate(v = [-25, -30.4, 12]) rotate(a=[90,0,0]) 
-	cylinder(h = 11, r=18/2, $fn=12, center=true);
-	translate(v = [-25, -30.4, 7.5])cube(size = [18,11,9], center = true);
-
-	// holes for connecting extruder
-	translate(v = [0, 0, 0]) 
-	{
-		
-		translate(v = [0, -31, 2]) cylinder(h = 10, r=m4_diameter/2, $fn=9, center=true);
-		translate(v = [0, -31, 5]) cylinder(h = 9, r=m4_nut_diameter/2, $fn=6, center=true);
-		translate(v = [0, 19, ]) cylinder(h = 20, r=m4_diameter/2, $fn=9, center=true);
-		translate(v = [0, 19, 5]) cylinder(h = 9, r=4.5, $fn=6, center=true);
-		
-		// Hotend hole
-		translate(v = [0, -6, 0]) cylinder(h = 20, r=21, $fn=20, center=true);
-
-		
-
-#		translate(v = [-25, -6, 2]) cylinder(h = 10, r=m4_diameter/2, $fn=9, center=true);
-		translate(v = [-25, -6, 5]) cylinder(h = 9, r=m4_nut_diameter/2, $fn=6, center=true);
-		translate(v = [25, -6, ]) cylinder(h = 20, r=m4_diameter/2, $fn=9, center=true);
-#		translate(v = [25, -6, 5]) cylinder(h = 9, r=4.5, $fn=6, center=true);
-		
-		
-		
-	}
-
-	//belt clamp holes
-	translate(v = [30, -18, 2]) cylinder(h = 10, r=m3_diameter/2, $fn=9, center=true);
-	translate(v = [30, -18, 5]) cylinder(h = 9, r=m3_nut_diameter/2, $fn=6, center=true);
-	translate(v = [48, -18, 2]) cylinder(h = 10, r=m3_diameter/2, $fn=9, center=true);
-	translate(v = [48, -18, 5]) cylinder(h = 9, r=m3_nut_diameter/2, $fn=6, center=true);
-
-	translate(v = [30, 18, 2]) cylinder(h = 10, r=m3_diameter/2, $fn=9, center=true);
-	translate(v = [30, 18, 5]) cylinder(h = 9, r=m3_nut_diameter/2, $fn=6, center=true);
-	translate(v = [48, 18, 2]) cylinder(h = 10, r=m3_diameter/2, $fn=9, center=true);
-	translate(v = [48, 18, 5]) cylinder(h = 9, r=m3_nut_diameter/2, $fn=6, center=true);
-
-
-	translate(v = [-25, -20, 2.5]) rotate(a=[0,90,0]) 
-	cylinder(h = 30, r=m4_diameter/2, $fn=10, center=true);
-
-	translate(v = [-25, 20, 2.5]) rotate(a=[0,90,0]) 
-	cylinder(h = 30, r=m4_diameter/2, $fn=10, center=true);
-	}}
-}
-
 holder_separation=18;
-
 
 module gregs_x_carriage()
 {
@@ -216,23 +124,29 @@ color([0,0,1])
 		}
 
 		// Cable tie holes.
-#		for (i=[-1,1])
+		for (i=[-1,1])
 		translate([25-lm8uu_holder_width/2,(holder_separation/2+lm8uu_holder_length*0.7)*i,5])
 		rotate([0,-30,0])
 		cube([2,4,20],center=true);
 
 #		for (i=[-1,1])
-		translate([-25+lm8uu_holder_width/2,6.5*i,5])
-		rotate([0,30,0])
-		translate([2,0,0])
-		cube([6,4,20],center=true);
+		{
+			translate([-25+lm8uu_holder_width/2,6.5*i,5])
+			rotate([0,30,0])
+			translate([2,0,0])
+			cube([6,4,20],center=true);
+
+
+			translate([-25-lm8uu_holder_width/2-1,6.5*i-2,-1.1])
+			cube([lm8uu_holder_width+2,4,2.4]);
+		}
 	}		
 }
 
 clearance=0.7;
 lm8uu_diameter=15+clearance;
 lm8uu_length=24+clearance;
-lm8uu_support_thickness=3.2; 
+lm8uu_support_thickness=3.2+1; 
 lm8uu_end_diameter=m8_diameter+1.5;
 
 lm8uu_holder_width=lm8uu_diameter+2*lm8uu_support_thickness;
@@ -412,32 +326,43 @@ module barbell (x1,x2,r1,r2,r3,r4)
 	}
 }
 
-//translate([0,-50,0])
-//fan_mount();
-
-fan_hole_separation=36;
+fan_hole_separation=36; // check
 fan_support_block=10;
-fan_trap_depth=2;
-fan_support_thickness=4;
+fan_trap_width=3;
+fan_support_thickness=10;
+fan_diameter=40;
+fan_hole_height=5;
 
-
+translate([0,-holder_separation-lm8uu_holder_width-fan_support_block/2+1,0])
+fan_mount();
 
 module fan_mount()
 {
-	for(i=[-1,1])
+	difference()
 	{
-		translate([i*fan_hole_separation/2,0,fan_support_block/2])
-		difference ()
+		translate([0,0,fan_support_block/2])
+		cube([fan_hole_separation+fan_support_block,fan_support_thickness,fan_support_block],center=true);
+		
+		for(i=[-1,1])
 		{
-			cube([fan_support_block,fan_support_thickness,fan_support_block],center=true);
-			rotate([90,0,0])
-			cylinder(r=m3_diameter/2,h=fan_support_thickness+2,center=true,$fn=6);
-
-			
-			rotate([-90,0,0])
-			rotate(360/12)
-			cylinder(r=m3_nut_diameter/2,h=fan_trap_depth+1,$fn=6);
+			translate([i*fan_hole_separation/2,0,fan_hole_height])
+			{
+				rotate([90,0,0])
+				rotate(180/8)
+				cylinder(r=m3_diameter/2,h=fan_support_thickness+2,center=true,$fn=8);
+	
+				translate([0,0,0])
+				rotate([90,0,0])
+				rotate([0,0,180/6])
+				cylinder(r=m3_nut_diameter/2,h=fan_trap_width,center=true,$fn=6);
+color([1,0,0])
+				translate([0,0,-(fan_hole_height+1)/2])
+				cube([m3_nut_diameter*cos(30),fan_trap_width,fan_hole_height+1],center=true);
+			}
 		}
+		translate([0,0,fan_hole_separation/2+fan_hole_height])
+		rotate([-90,0,0])
+		cylinder(r=fan_diameter/2,h=fan_support_thickness+2,center=true);
 	}
 }
 
