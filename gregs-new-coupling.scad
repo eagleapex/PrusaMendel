@@ -10,17 +10,17 @@ include <configuration.scad>
  * @category Printed
  */
 
-m8_nut_height=6.5; //verify
+m8_nut_height=7; 
 washer_diameter=19.5;
-washer_thickness=1.8;
-max_adjustment=1.5;
+washer_thickness=1.6;
+max_adjustment=1.2;
 
 m8_nut_flat_to_flat=m8_nut_diameter*cos(30);
-m8_overlap=m8_nut_diameter-m8_nut_flat_to_flat;
+m8_overlap=m8_nut_diameter-m8_nut_flat_to_flat+0.5;
 flange_diameter=(m8_nut_diameter*cos(30)+m8_overlap*2)/cos(30);
 
-surround_thickness=5;
-surround_nut_trap=2.5;
+surround_thickness=3;
+surround_nut_trap=2.2;
 surround_nut_height=m3_nut_diameter/2+1.2;
 surround_inner_d=(flange_diameter*cos(30)+max_adjustment+2)/cos(30);
 surround_outer_d=(surround_inner_d*cos(30)+2*surround_thickness)/cos(15);
@@ -29,9 +29,9 @@ surround_bevel_radius=surround_thickness*1.2;
 
 cup_base_thickness=3;
 cup_clearance=0.25;
-cup_walls=2.5;
+cup_walls=2;
 cup_inner_diameter=(surround_outer_d*cos(15)+2*cup_clearance)/cos(15);
-cup_outer_diameter=cup_inner_diameter+cup_walls*2;
+cup_outer_diameter=(cup_inner_diameter*cos(15)+cup_walls*2)/cos(15);
 cup_height=cup_base_thickness+washer_thickness+surround_nut_height+m3_diameter/2+3.5;
 
 coupling();
@@ -42,7 +42,8 @@ module coupling_cup()
 {
 	difference()
 	{
-		cylinder(r=cup_outer_diameter/2,h=cup_height,$fn=100);
+		rotate(180/12)
+		cylinder(r=cup_outer_diameter/2,h=cup_height,$fn=12);
 		rotate(180/12)
 		translate([0,0,cup_base_thickness])
 		cylinder(r=cup_inner_diameter/2,h=cup_height-cup_base_thickness+1,$fn=12);
@@ -129,10 +130,24 @@ module coupling()
 		}
 	}	
 
+	// The surround.
+
 	difference ()
 	{
 		rotate(180/12)
 		cylinder (r=surround_outer_d/2,h=surround_height,$fn=12);
+	
+		//bevel the bottom so it fits in the cup without cleanup.
+
+		rotate(180/12)
+		render () difference ()
+		{
+			translate([0,0,-1])
+			cylinder (r=surround_outer_d/2+1,h=0.4 + 1,$fn=12);
+			translate([0,0,-2])
+			cylinder (r=surround_outer_d/2-0.5,h=0.4 + 1 + 2,$fn=12);
+		}
+
 		translate([0,0,-1])
 		cylinder (r=surround_inner_d/2,h=2*m8_nut_height,$fn=6);
 
