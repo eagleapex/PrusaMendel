@@ -1,6 +1,6 @@
 include <configuration.scad>
 use <gregs-x-carriage.scad>
-use <gregs-coupling.scad>
+use <gregs-new-coupling.scad>
 
 
 union ()
@@ -18,7 +18,20 @@ union ()
 	translate([i*24-30,43,0])
 	y_axis_holder();
 
-	for (i=[0:1])
-	translate([i*35-15,-58+i*10,0])
-	coupling2();
+	translate([-53,-18,0])
+	coupling(); 
+
+	translate([-53,15,0])
+	coupling(); 
+
+	translate([-55,50,0])
+	coupling_cup(); 
+
+		translate([55,0,0])
+	coupling_cup ();
+
+//	translate([i*35-15,-58+i*10,0])
+//	coupling(); 
+//	translate([30,0,0])
+//	coupling_cup ();
 }
