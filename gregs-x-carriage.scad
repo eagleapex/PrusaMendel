@@ -21,11 +21,11 @@ include <configuration.scad>
  */ 
 
 belt_clamp_thickness=2;
-belt_clamp_width=m3_diameter+3*belt_clamp_thickness;
+belt_clamp_width=m3_diameter+3*belt_clamp_thickness+2;
 
 
 for (i=[-1,1])
-translate([0,i*(belt_clamp_width+2),0])
+translate([0,i*(belt_clamp_width+1),0])
 belt_clamp();
 
 belt_clamp_channel();
@@ -80,7 +80,8 @@ color([0,0,1])
 //			belt_support_offset=25+17.5;
 		
 			for (i=[-1,1])
-			translate([-25-13.5,i*(lm8uu_holder_length/2+belt_clamp_width/2)])
+			translate([-25-13.5-1,i*(lm8uu_holder_length/2+belt_clamp_width/2)])
+			rotate(90*(i+1)+180)
 			belt_clamp_socket ();
 		}
 	
@@ -96,7 +97,8 @@ color([0,0,1])
 
 
 		for (i=[-1,1])
-		translate([-25-13.5,i*(lm8uu_holder_length/2+belt_clamp_width/2)])
+		translate([-25-13.5-1,i*(lm8uu_holder_length/2+belt_clamp_width/2)])
+		rotate(90*(i+1)+180)
 		belt_clamp_holes();
 
 		// Cable tie holes.
@@ -274,6 +276,11 @@ module belt_clamp_holes()
 		rotate([90,0,0])
 		rotate(360/16)
 		cylinder(r=m3_diameter/2-0.3 /*tight*/ ,h=belt_clamp_width+2,center=true,$fn=8);
+
+		rotate([90,0,0])
+		rotate(360/16)
+		translate([0,0,belt_clamp_width/2])
+		cylinder(r=m3_nut_diameter/2-0.3 /*tight*/ ,h=3.4,center=true,$fn=8);
 	}
 }
 
