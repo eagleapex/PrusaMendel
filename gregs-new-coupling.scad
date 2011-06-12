@@ -73,8 +73,8 @@ module coupling()
 			translate([0,0,-3])
 			union()
 			{
-				cylinder(h = 18, r=7);
-				translate(v = [0, 6, 7.5]) cube(size = [14,12,21], center = true);
+				cylinder(h = 15.5, r=7);
+				translate(v = [0, 6, 6.25]) cube(size = [14,12,18.5], center = true);
 			}
 			translate([0,0,-1])
 			cylinder(r=11.8,h=32);
