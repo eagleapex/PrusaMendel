@@ -22,7 +22,12 @@ include <configuration.scad>
 
 belt_clamp_thickness=2;
 belt_clamp_width=m3_diameter+3*belt_clamp_thickness+2;
-
+fan_hole_separation=36; // check
+fan_support_block=10;
+fan_trap_width=3;
+fan_support_thickness=10;
+fan_diameter=40;
+fan_hole_height=5;
 
 for (i=[-1,1])
 translate([0,i*(belt_clamp_width+1),0])
@@ -34,12 +39,17 @@ gregs_x_carriage();
 
 holder_separation=18;
 
-module gregs_x_carriage()
+module gregs_x_carriage(with_fanmount=true)
 {
 	difference()
 	{
 		union ()
 		{
+			if (with_fanmount)
+			translate([0,-holder_separation-lm8uu_holder_width-fan_support_block/2+3,0])
+			fan_mount();
+
+
 			linear_extrude(height=lm8uu_support_thickness)
 			{
 			barbell (
@@ -47,7 +57,6 @@ module gregs_x_carriage()
 				[25,-holder_separation/2],
 				lm8uu_holder_width/2,lm8uu_holder_width/2,12,12);
 		
-
 			barbell (
 				[25-lm8uu_holder_width/2,holder_separation/2+lm8uu_holder_length-8],
 				[-25-13.5+belt_clamp_hole_separation/2,1*(lm8uu_holder_length/2+belt_clamp_width/2)],
@@ -148,7 +157,7 @@ color([0,0,1])
 clearance=0.7;
 lm8uu_diameter=15+clearance;
 lm8uu_length=24+clearance;
-lm8uu_support_thickness=3.2+1; 
+lm8uu_support_thickness=3.2; 
 lm8uu_end_diameter=m8_diameter+1.5;
 
 lm8uu_holder_width=lm8uu_diameter+2*lm8uu_support_thickness;
@@ -278,9 +287,8 @@ module belt_clamp_holes()
 		cylinder(r=m3_diameter/2-0.3 /*tight*/ ,h=belt_clamp_width+2,center=true,$fn=8);
 
 		rotate([90,0,0])
-		rotate(360/16)
 		translate([0,0,belt_clamp_width/2])
-		cylinder(r=m3_nut_diameter/2-0.3 /*tight*/ ,h=3.4,center=true,$fn=8);
+		cylinder(r=m3_nut_diameter/2-0.3 /*tight*/ ,h=3.4,center=true,$fn=6);
 	}
 }
 
@@ -333,23 +341,27 @@ module barbell (x1,x2,r1,r2,r3,r4)
 	}
 }
 
-fan_hole_separation=36; // check
-fan_support_block=10;
-fan_trap_width=3;
-fan_support_thickness=10;
-fan_diameter=40;
-fan_hole_height=5;
-
-translate([0,-holder_separation-lm8uu_holder_width-fan_support_block/2+1,0])
-fan_mount();
-
 module fan_mount()
 {
 	difference()
 	{
-		translate([0,0,fan_support_block/2])
-		cube([fan_hole_separation+fan_support_block,fan_support_thickness,fan_support_block],center=true);
-		
+		union ()
+		{
+			translate([0,0,fan_support_block/4])
+			cube([fan_hole_separation+fan_support_block,fan_support_thickness,fan_support_block/2],center=true);
+
+			for (i=[-1,1])
+			translate([i*fan_hole_separation/2,0,fan_support_block/2])
+			rotate([90,0,0])
+			cylinder(r=fan_support_block/2,h=fan_support_block,center=true,$fn=20);
+
+			translate([0,0,fan_support_block/2])
+			cube([fan_hole_separation,fan_support_thickness,fan_support_block],center=true);
+	
+			translate([0,6,lm8uu_support_thickness/2])
+	#		cube([fan_hole_separation+fan_support_block,fan_support_thickness+12,lm8uu_support_thickness],center=true);
+		}
+	
 		for(i=[-1,1])
 		{
 			translate([i*fan_hole_separation/2,0,fan_hole_height])
