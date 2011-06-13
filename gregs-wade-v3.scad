@@ -588,14 +588,14 @@ module mendel_parts_v6_hotend ()
 	cylinder(r=extruder_recess_d/2,h=extruder_recess_h+1); 
 	
 	for(mount=[-1,1])
-	rotate([0,0,-hole_axis_rotation+90+90*mount])
+	rotate([0,0,hole_axis_rotation+90+90*mount])
 	translate([hole_separation/2,0,0])
 	{
 		translate([0,0,-1])
 		cylinder(r=m4_diameter/2,h=base_thickness+2,$fn=8);
 
 		translate([0,0,base_thickness/2])
-		rotate(hole_axis_rotation)
+		rotate(-hole_axis_rotation+180)
 		{
 //			rotate(30)
 			cylinder(r=m4_nut_diameter/2,h=base_thickness/2+hole_slot_height,$fn=6);
