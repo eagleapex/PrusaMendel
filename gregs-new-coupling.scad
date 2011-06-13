@@ -73,15 +73,15 @@ module coupling()
 			translate([0,0,-3])
 			union()
 			{
-				cylinder(h = 18, r=7);
-				translate(v = [0, 6, 7.5]) cube(size = [14,12,21], center = true);
+				cylinder(h = 15.5, r=7);
+				translate(v = [0, 6, 6.25]) cube(size = [14,12,18.5], center = true);
 			}
 			translate([0,0,-1])
 			cylinder(r=11.8,h=32);
 		}
 
 		// inside diameter
-		translate(v = [0, 0, surround_height])cylinder(h = 16, r=motor_shaft/2, $fn=16);
+		translate(v = [0, 0, surround_height])cylinder(h = 16, r=motor_shaft/2-0.1, $fn=16);
 		
 		// screw holes
 		rotate ([0,0,90]) translate(v = [6, 15, 7.5+surround_height]) rotate ([90,0,0]) 
