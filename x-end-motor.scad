@@ -11,92 +11,32 @@ include <configuration.scad>
 corection = 1.17; 
 
 /**
+ * @id x-end-motor
  * @name X end motor
  * @category Printed
  * @using 2 bushing
- * @using 8 m3x10
- * @using 4 m3nut
+ * @using 4 m3x10xhex
  * @using 4 m3washer
  * @using 1 m8spring
  * @using 2 m8nut
- */  
+ */
 
 use <x-end.scad>
 
-module xend_nema17()
-{
-	//nema17 connector
-#	difference()
-	{
-		union(){
-			translate(v = [21, -22.5, 24.5]) cube(size = [24,5,6], center = true);
-			translate(v = [32.5, 2, 13.5]) cube(size = [5,54,52], center = true);
-			translate(v = [22.5, 2, -11]) cube(size = [20,54,3], center = true);
-		}
-	
-		// some reduction of bottom part 
-		translate(v = [15, 15, -11]) rotate ([0,0,-17]) cube(size = [20,70,25], center = true);
-	
-		translate(v = [0, 0, -4.7])
-		{
-			translate(v = [32.5, 7, 23.5]) rotate(a=[0,90,0]) rotate(a=[0,0,30]) 
-			cylinder(h = 10, r=12, $fn=20, center=true);
-
-			translate(v = [30, 7, 23]) rotate(a=[0,90,0])
-			{
-				rotate ([0,0,45]) translate([20,0,0]) cube(size = [9,3.2,25], center = true);
-				rotate ([0,0,-45]) translate([20,0,0]) cube(size = [9,3.2,25], center = true);
-				rotate ([0,0,135]) translate([20,0,0]) cube(size = [9,3.2,25], center = true);
-				rotate ([0,0,-135]) translate([20,0,0]) cube(size = [9,3.2,25], center = true);
-	
-				rotate ([0,0,135]) translate([32,0,0]) cube(size = [9,20,25], center = true);
-				rotate ([0,0,-135]) translate([35,0,0]) cube(size = [9,40,25], center = true);
-			}
-		}
-	}
-}
-
-endstop_thickness=4; 
-endstop_w=10;
-endstop_l=14;
-endstop_h=10;
-
-module xendmotor()
+module xendmotor(curved_sides=false)
 {
 	difference ()
 	{
 		union ()
 		{
-			mirror() xend(shroud_height=56.5);
+			mirror()
+			xend(closed_end=true,curved_sides=curved_sides);
+//			import_stl("x-end.stl");
 		
 			//translate(v = [0, 35, 12.5]) 
 			//xend_nema17();
 		
 			positioned_motor_mount();
-			
-			// Endstop mount 
-//			translate(v = -[0,17,24.5]) 
-			translate([-35-2,-25,15.75])
-			difference()
-			{
-				translate([2,0,0])
-				cube([endstop_w+endstop_thickness-2,
-				endstop_l+endstop_thickness,
-				endstop_h+endstop_thickness]);
-				translate([-1,-1,endstop_thickness])
-				cube([endstop_w+1,
-				endstop_l+1,
-				endstop_h+1]);
-				
-				translate([endstop_w-1,endstop_l-1-m3_diameter/2,m3_diameter/2+1+endstop_thickness])
-				rotate([0,90,0])
-				rotate(360/16)
-				{
-					cylinder(r=m3_diameter/2,h=endstop_thickness+2,$fn=8);
-					translate([0,0,endstop_thickness+2-3])
-					cylinder(r=m3_nut_diameter/2,h=3,$fn=6);
-				}
-			}			
 		}
 		positioned_motor_mount_holes();
 		xendcorners(5,0,5,5,0);
@@ -105,6 +45,7 @@ module xendmotor()
 
 xendmotor();
 
+// GregFrosts stuff
 nema17_hole_spacing=1.2*25.4; 
 nema17_width=1.7*25.4;
 thickness=9;
@@ -198,7 +139,7 @@ module motor_mount ()
 module motor_mount_holes ()
 {
 	// Motor mount holes. 
-	translate([0,0,-1])
+	translate([0,0,1])
 	rotate(motor_mount_rotation)
 	{
 		for (hole=[3:5])
@@ -252,3 +193,4 @@ sqrt((point1[0]-point2[0])*(point1[0]-point2[0])+
 function angle(a,b,c) = acos((a*a+b*b-c*c)/(2*a*b)); 
 
 function rotated(a)=[cos(a),sin(a),0];
+
