@@ -9,13 +9,13 @@ union ()
 	gregs_x_carriage();
 
 	for (i=[-1,1]) 
-	translate([0,i*(12),0])
+	translate([0,i*(13),0])
 	belt_clamp();
 	
 	belt_clamp_channel();
 
 	for (i=[0:2])
-	translate([i*24-30,43,0])
+	translate([i*24-35,50,0])
 	y_axis_holder();
 
 	translate([-53,-18,0])
@@ -27,7 +27,7 @@ union ()
 	translate([-55,50,0])
 	coupling_cup(); 
 
-		translate([55,0,0])
+	translate([55,0,0])
 	coupling_cup ();
 
 //	translate([i*35-15,-58+i*10,0])
