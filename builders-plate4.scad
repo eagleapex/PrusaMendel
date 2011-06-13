@@ -6,9 +6,9 @@ use <gregs-x-carriage.scad>
 
 union ()
 {
-	xendmotor();
+	xendmotor(curved_sides=true,closed_end=true);
 	
-	translate([-10,38,0]) 
+	translate([-10,33,0]) 
 	rotate(180)
-	xendidler();
+	xendidler(curved_sides=true,closed_end=false);
 }
