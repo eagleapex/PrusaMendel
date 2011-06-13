@@ -40,19 +40,19 @@ module xendidler(closed_end=true,curved_sides=true)
 			translate([-25-15.8/2+24/2,12.5,25.3+12.5]) 
 			cube([24,5,4.4],center=true);
 
-			translate([-25-15.8/2+wall_thickness/2,-5,15.8/2+(40-7/2)/2]) 
-			cube([wall_thickness,40,40-15.8+7/2],center=true);
+			difference ()
+			{
+				translate([-25-15.8/2+wall_thickness/2,-5,15.8/2+(40-15.8/2)/2]) 
+				cube([wall_thickness,40,40-15.8+15.8/2],center=true);
 
-			translate([-25-15.8/2+wall_thickness/2,-5,15.8/2+(40-15.8/2)/2]) 
-			cube([wall_thickness,40,40-15.8+15.8/2],center=true);
+				translate([-25,-26,15.8/2])
+				rotate(90) 
+				teardropcentering(6,42);
+			}
 		}
 
 		translate([-25-15.8/2+wall_thickness/2, -6, 28-3-4.7+12.5]) rotate([0,90,0]) 
 		cylinder(h=wall_thickness+2,r=m8_diameter/2,$fn=9,center=true);
-	
-		translate([-25,-26,15.8/2])
-		rotate(90) 
-		teardropcentering(6,42);
 
 		xendcorners(5,5,5,5,0);
 
