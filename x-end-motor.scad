@@ -8,6 +8,7 @@
 // http://github.com/prusajr/PrusaMendel
 
 include <configuration.scad>
+use <teardrop.scad>
 corection = 1.17; 
 
 /**
@@ -83,8 +84,6 @@ module positioned_motor_mount()
 					cube([thickness,nema17_support_d,nema17_support_d/2]);
 					cube([thickness,nema17_support_d,nema17_support_d/2]);
 				}
-				
-			
 			}
 			
 			render()
@@ -108,10 +107,12 @@ module positioned_motor_mount()
 			}
 		}
 
-	translate(motor_mount_translation)
-	translate([-25,-nema17_width/2-1-16,-32])
-	cube([20,nema17_width+2,20]);
+		translate([25,-26,15.8/2])
+		rotate(90) 
+		teardropcentering(6,42);
 
+		translate([20,-23,-1])
+		cube([8.5,36,20]);
 	}
 }
 
