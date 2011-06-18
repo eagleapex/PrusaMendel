@@ -76,7 +76,7 @@ module xend_side(closed_end=true,curved_sides=false)
 			rotate(90)
 			teardropcentering(
 				axis_diameter_larger,
-				closed_end?xend_length-1:xend_length+2);
+				closed_end?xend_length-solid_end_width+1:xend_length+2);
 
 			translate([axis_diameter_larger,0,0])
 			rotate([0,8,0])
@@ -91,6 +91,19 @@ module xend_side(closed_end=true,curved_sides=false)
 			cube([axis_diameter_larger,
 				xend_length-2*solid_end_width,
 				xend_height/2+1]);
+
+
+			if (closed_end)
+			{
+				translate([0,xend_length-solid_end_width+1.5,0])
+				rotate([90,0,0])
+				cylinder(r=m3_nut_diameter/2, h=3,$fn=6);
+
+				translate([0,xend_length+1,0])
+				rotate([90,0,0])
+				cylinder(r=m3_diameter/2-0.2, h=solid_end_width+2,$fn=6);
+			}
+
 			}
 
 			translate([-axis_diameter_larger-1,solid_end_width+slot_width,-xend_height/2])
@@ -121,6 +134,12 @@ module xend_side(closed_end=true,curved_sides=false)
 			for (i=[0:6])
 			translate([-axis_diameter_larger-2,5+5*i,-axis_diameter_larger])
 			cylinder(h=7,r=0.4,$fn=6,center=true);
+		}
+
+		if (!closed_end)
+		{
+			translate([0,xend_length-1.5-solid_end_width,0])
+			cylinder(r=3/2, h=xend_height+2,$fn=10,center=true);
 		}
 	}
 }
@@ -195,4 +214,4 @@ module xendcorners(dia1, dia2, dia3, dia4, height=0)
 }
 //xendcorners(5,5,5,5,0);
 
-xend(closed_end=false,curved_sides=true);
+xend(closed_end=false,curved_sides=false);
