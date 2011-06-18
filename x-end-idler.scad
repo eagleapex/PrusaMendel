@@ -56,22 +56,22 @@ module xendidler(closed_end=true,curved_sides=true)
 
 		xendcorners(5,5,5,5,0);
 
-		if (!closed_end)
-		for (i=[-1,1])
-		translate([15*i,10,15.8/2+0.75]) 
-		{
-			rotate([90,0,0])
-			rotate([0,0,180/6])
-			cylinder(r=m3_diameter/2-0.2,h=20,center=true,$fn=6);
-
-			rotate([90,0,0])
-			rotate([0,0,180/6])
-			cylinder(r=(m3_nut_diameter-0.5)/2,h=3,center=true,$fn=6);
-
-			color([1,0,0])
-			translate([0,0,(10+1)/2])
-			cube([(m3_nut_diameter-0.5)*cos(30),3,10+1],center=true);
-		}
+//		if (!closed_end)
+//		for (i=[-1,1])
+//		translate([15*i,10,15.8/2+0.75]) 
+//		{
+//			rotate([90,0,0])
+//			rotate([0,0,180/6])
+//			cylinder(r=m3_diameter/2-0.2,h=20,center=true,$fn=6);
+//
+//			rotate([90,0,0])
+//			rotate([0,0,180/6])
+//			cylinder(r=(m3_nut_diameter-0.5)/2,h=3,center=true,$fn=6);
+//
+//			color([1,0,0])
+//			translate([0,0,(10+1)/2])
+//			cube([(m3_nut_diameter-0.5)*cos(30),3,10+1],center=true);
+//		}
 	}
 }
 
