@@ -25,7 +25,7 @@ dovetail_height=8;
 dovetail_width=9;
 arm_width=15;
 arm_stub_length=12;
-slot_width=9.9;
+slot_width=9.4;
 
 ball_facets=20;
 bearing_facets=80;
@@ -39,16 +39,16 @@ race_inside_radius=ball_translation+ball_diameter/3;
 
 //bushing_race ();
 
-spoke();
+//spoke();
 
-//race ();
-//hub();
-//translate((race_radius+race_inside_radius)/sqrt(2)*[-1,-1,0])
-//hub();
-//
-//translate([-40,10])
-//rotate(30)
-//balls();
+race ();
+hub();
+translate((race_radius+race_inside_radius)/sqrt(2)*[-1,-1,0])
+hub();
+
+translate([-40,10])
+rotate(30)
+balls();
 
 //for(i=[-1:-3])
 //translate([0,i*(arm_width+2),0])
