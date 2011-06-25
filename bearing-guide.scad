@@ -6,20 +6,24 @@
 *@categoryPrinted
 */
 
-single_layer_width=0.6;
-bearing_inner=22.3;
-thickness=1.7;
+layer_height=0.4;
+perimeter_w_over_t=1.9;
+
+single_layer_width=layer_height*perimeter_w_over_t;
+bearing_inner=22.2;
+thickness=layer_height*4.1;
 height=7+thickness;
 wall_ascent=5;
 wall_descent=0.5;
+tolerance=0.15;
 
 module inner()
 {
 	difference()
 	{
-		cylinder(r=bearing_inner/2+single_layer_width+0.3,h=height);
+		cylinder(r=bearing_inner/2+single_layer_width+tolerance,h=height);
 		translate([0,0,-1])
-		cylinder(r=bearing_inner/2+0.3,h=height+2);
+		cylinder(r=bearing_inner/2+tolerance,h=height+2);
 	}
 
 	difference()
@@ -34,9 +38,9 @@ module outer()
 {
 	difference()
 	{
-		cylinder(r=bearing_inner/2+2*single_layer_width+0.65,h=height);
+		cylinder(r=bearing_inner/2+2*single_layer_width+2*tolerance,h=height);
 		translate([0,0,-1])
-		cylinder(r=bearing_inner/2+single_layer_width+0.65,h=height+2);
+		cylinder(r=bearing_inner/2+single_layer_width+2*tolerance,h=height+2);
 	}
 
 	difference()
@@ -49,5 +53,5 @@ module outer()
 
 inner();
 
-translate([34,0,0])
-outer();
+//translate([34,0,0])
+//outer();
