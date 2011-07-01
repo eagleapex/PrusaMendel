@@ -256,7 +256,7 @@ module block_holes()
 	}
 
 	// Round the bottom front corner.
-//removed for molding
+//	removed for molding
 //	translate ([-base_leadout-base_thickness/2,-1,-2])
 //	render()
 //	difference() 
@@ -269,8 +269,8 @@ module block_holes()
 //	}
 
 	// Idler fulcrum hole.   now a cone
-	translate(idler_fulcrum+[0,0,4.45])
-	cylinder(r2=m3_diameter/2,r1=0,h=m3_diameter/4,$fn=16);
+	translate(idler_fulcrum+[0,0,7-m3_diameter/3])
+	rotate([0,180,0]) cylinder(r1=m3_diameter/2,r2=0,h=m3_diameter/3,$fn=16);
 
 	translate(idler_fulcrum+[0,0,idler_short_side/2-idler_hinge_width-1])
 	cylinder(r1=m3_nut_diameter/2+.25,r2=m3_nut_diameter/2+1.25,h=1,$fn=40);
@@ -298,10 +298,13 @@ module block_holes()
 				wade_block_height-motor_mount_translation[1]+1,
 				wade_block_depth]);
 		
-			translate([0,0,])  //trapped bearing. need to be drilled?
+			translate([0,0,-1])  //bearing inclusion, protrudes above pour surface
 			b608(h=9);
-			translate([-hole_for_608/2,-hole_for_608/2,0])
+			translate([-hole_for_608/2,-hole_for_608/2,-1])
 			cube([hole_for_608/2,hole_for_608,9]);
+			translate([-hole_for_608/2,-hole_for_608/2,9/2-1]) //fillet
+			rotate([270,0,0])
+			cylinder(r=9/2,h=hole_for_608);
 		
 			translate([0,0,20])
 			b608(h=9);
@@ -316,7 +319,7 @@ module block_holes()
 			translate([-filament_feed_hole_offset,-34.01,wade_block_depth/2])
 			rotate([90,0,180])
 			rotate(360/16)
-			cylinder(r1=filament_feed_hole_d/2,r2=0,h=filament_feed_hole_d/2,$fn=8);	
+			cylinder(r1=filament_feed_hole_d/2,r2=0,h=filament_feed_hole_d/2,$fn=8); 
 
 			// Mounting holes on the base.
 			for (mount=[0:1])
