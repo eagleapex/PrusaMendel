@@ -101,7 +101,7 @@ module wade (hotend_mount=0)
 {
 	
 	//molding plate block. needs to move to properly intersect with holes protruding above pour surface
-%	translate([-35,-10,-5])
+	translate([-35,-10,-5])
 	cube([110,80,5]);
 
 	difference ()
@@ -373,16 +373,16 @@ module motor_mount_holes()  //design for cones
 	slot_right=2;
 
 	{
-		translate([0,0,screw_head_recess_depth-.5]) //hole side, needs through hole
+		translate([0,0,motor_mount_thickness-.99]) //hole side, needs through hole
 		for (hole=[0:2])
 		{
 			translate([motor_hole(hole)[0]-slot_left,motor_hole(hole)[1],0])
-			cylinder(h=motor_mount_thickness-screw_head_recess_depth+1,r=radius,$fn=16);
+			cylinder(h=radius/2,r2=radius,r1=0,$fn=16);
 			translate([motor_hole(hole)[0]+slot_right,motor_hole(hole)[1],0])
-			cylinder(h=motor_mount_thickness-screw_head_recess_depth+1,r=radius,$fn=16);
+			cylinder(h=radius/2,r2=radius,r1=0,$fn=16);
 
-			translate([motor_hole(hole)[0]-slot_left,motor_hole(hole)[1]-radius,0])
-			cube([slot_left+slot_right,radius*2,motor_mount_thickness-screw_head_recess_depth+1]);
+//			translate([motor_hole(hole)[0]-slot_left,motor_hole(hole)[1]-radius,0])
+//			cube([slot_left+slot_right,radius*2,motor_mount_thickness-screw_head_recess_depth+1]);
 		}
 
 //		translate([0,0,-1]) //recess side
