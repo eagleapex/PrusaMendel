@@ -1,6 +1,6 @@
 // Greg's Wade Extruder. 
 // It is licensed under the Creative Commons - GNU GPL license. 
-// © 2010 by GregFrost
+//  2010 by GregFrost
 // Extruder based on prusa git repo.
 // http://www.thingiverse.com/thing:6713
 

@@ -1,6 +1,6 @@
 // Greg's Wade Extruder. 
 // It is licensed under the Creative Commons - GNU GPL license. 
-// © 2010 by GregFrost
+//  2010 by GregFrost
 // Extruder based on prusa git repo.
 // http://www.thingiverse.com/thing:6713
 
@@ -162,23 +162,23 @@ module wade (hotend_mount=0)
 			}
 
 			// The idler hinge support.
-			translate(idler_fulcrum)
-			{
-				rotate(-15)
-				translate([-(idler_hinge_r+3),-idler_hinge_r-2,-wade_block_depth/2])
-				cube([idler_hinge_r+3,
-					idler_hinge_r*2+4,
-					wade_block_depth/2-
-					idler_short_side/2+
-					idler_hinge_width+0.25+
-					layer_thickness]);
-				rotate(-15)
-				translate([-(idler_hinge_r+3),-idler_hinge_r-2,
-					-idler_short_side/2+idler_hinge_width+0.25])
-				cube([idler_hinge_r+3+15,
-					idler_hinge_r*2+4,
-					layer_thickness]);
-			}
+//			translate(idler_fulcrum)
+//			{
+//				rotate(-15)
+//				translate([-(idler_hinge_r+3),-idler_hinge_r-2,-wade_block_depth/2])
+//				cube([idler_hinge_r+3,
+//					idler_hinge_r*2+4,
+//					wade_block_depth/2-
+//					idler_short_side/2+
+//					idler_hinge_width+0.25+
+//					layer_thickness]);
+//				rotate(-15)
+//				translate([-(idler_hinge_r+3),-idler_hinge_r-2,
+//					-idler_short_side/2+idler_hinge_width+0.25])
+//				cube([idler_hinge_r+3+15,
+//					idler_hinge_r*2+4,
+//					layer_thickness]);
+//			}
 
 			//The base.
 			translate([-base_leadout,0,0])
