@@ -299,7 +299,7 @@ module block_holes()
 				cube([wade_block_width,
 				wade_block_height-motor_mount_translation[1]+.01,
 				wade_block_depth]);
-				hobbed();
+				cylinder(r=m8_clearance_hole/2+.5,h=wade_block_width);	
 			}
 		
 			translate([0,0,-1])  //bearing inclusion, protrudes above pour surface
@@ -317,11 +317,11 @@ module block_holes()
 			{
 				translate([-13,0,9.5])
 				b608(h=wade_block_depth);
-				hobbed();
+				cylinder(r=m8_clearance_hole/2+.5,h=wade_block_width);	
 			}
 
 			translate([0,0,9.5+m8_clearance_hole/2-.01]) 
-				hobbed();
+			cylinder(r=m8_clearance_hole/2,h=wade_block_width);	
 			translate([0,0,9.5+m8_clearance_hole/2]) //drill cone?
 			rotate([180,0,0])
 			cylinder(r1=m8_clearance_hole/2,r2=0,h=m8_clearance_hole/2);	
