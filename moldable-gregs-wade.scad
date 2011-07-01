@@ -22,10 +22,9 @@ wade(hotend_mount=groovemount);
 //%import_stl("extruder-body.stl");
 
 //Place for printing
+//Place for assembly.  -now in union below
 translate([80,-10,15.25])
 rotate([0,-90,0])
-
-//Place for assembly.
 wadeidler(); 
 
 //import_stl("idler.stl");
@@ -105,6 +104,9 @@ module wade (hotend_mount=0)
 	{
 		union()
 		{
+			//wade idler
+			//translate([80,-10,15.25]) rotate([0,-90,0]) wadeidler(); 
+
 			// The wade block.
 			cube([wade_block_width,wade_block_height,wade_block_depth]);
 
@@ -188,9 +190,9 @@ module wade (hotend_mount=0)
 
 			motor_mount ();
 	
-			//molding plate block. this becomes the top surface of the pour
-			translate([-35,-10,-5])
-			cube([120,80,5]);
+//			//molding plate block. this becomes the top surface of the pour
+//			translate([-35,-10,-5])
+//			cube([120,80,5]);
 		}
 	
 
@@ -444,7 +446,7 @@ module wadeidler()
 
 			// The fulcrum Hinge
 			translate(idler_fulcrum)
-			rotate([0,0,-30])
+			rotate([0,0,-20])
 			{
 				cylinder(h=idler_short_side,r=idler_hinge_r,center=true,$fn=60);
 				translate([-idler_end_length/2,0,0])
@@ -455,7 +457,7 @@ module wadeidler()
 		//Back of idler.
 		translate(idler_axis+[-idler_height/2+2-idler_height,
 			idler_long_side/2-idler_long_bottom-10,0])
-		cube([idler_height,idler_long_side,idler_short_side],center=true);
+		cube([idler_height,idler_long_side,idler_short_side+.01],center=true);
 
 		//Slot for idler fulcrum mount.
 		translate(idler_fulcrum)
@@ -482,6 +484,8 @@ module wadeidler()
 			}
 			cylinder(h=idler_short_side-6,r=m8_diameter/2-0.25/*Tight*/,
 				center=true,$fn=20);
+			translate([m8_diameter/4,0,0])
+				cube([	m8_diameter/2,m8_diameter/1.1,idler_short_side-6],center=true);
 		}
 
 		//Fulcrum hole.
@@ -490,38 +494,38 @@ module wadeidler()
 		cylinder(h=idler_short_side+2,r=m3_diameter/2-0.1,center=true,$fn=8);
 
 		//Nut trap for fulcrum screw.
-		translate(idler_fulcrum+[0,0,idler_short_side/2-idler_hinge_width-1])
-		rotate(360/16)
-		cylinder(h=3,r=m3_nut_diameter/2,$fn=6);
+//		translate(idler_fulcrum+[0,0,idler_short_side/2-idler_hinge_width-1])
+//		rotate(360/16)
+//		cylinder(h=3,r=m3_nut_diameter/2,$fn=6);
 
 		for(idler_screw_hole=[-1,1])
-		translate(idler_axis+[2-idler_height,0,0])
+		translate(idler_axis+[.01-idler_height,0,0])
 		{
 			//Screw Holes.
 			translate([-1,idler_mounting_hole_up,
 				idler_screw_hole*idler_mounting_hole_across])
 			rotate([0,90,0])
 			{
-				cylinder(r=idler_mounting_hole_diameter/2,h=idler_height+2,$fn=16);
+				cylinder(r=idler_mounting_hole_diameter/2,h=idler_height+3,$fn=16);
 				translate([0,idler_mounting_hole_elongation,0])
-				cylinder(r=idler_mounting_hole_diameter/2,h=idler_height+2,$fn=16);
+				cylinder(r=idler_mounting_hole_diameter/2,h=idler_height+3,$fn=16);
 				translate([-idler_mounting_hole_diameter/2,0,0])
 				cube([idler_mounting_hole_diameter,idler_mounting_hole_elongation,
-					idler_height+2]);
+					idler_height+3]);
 			}
 
 			// Rounded corners.
 			render()
-			translate([idler_height/2,idler_long_top,
+			translate([idler_height/2+1.99,idler_long_top,
 				idler_screw_hole*(idler_short_side/2)])
 			difference()
 			{
 				translate([0,-idler_corners_radius/2+0.5,-idler_screw_hole*(idler_corners_radius/2-0.5)])
-				cube([idler_height+2,idler_corners_radius+1,idler_corners_radius+1],
+				cube([idler_height+.01,idler_corners_radius+1,idler_corners_radius+1],
 					center=true);
 				rotate([0,90,0])
 				translate([idler_screw_hole*idler_corners_radius,-idler_corners_radius,0])
-				cylinder(h=idler_height+4,r=idler_corners_radius,center=true,$fn=40);
+				cylinder(h=idler_height+.01,r=idler_corners_radius,center=true,$fn=40);
 			}
 		}
 	}
