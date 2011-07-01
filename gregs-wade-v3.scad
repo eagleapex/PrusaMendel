@@ -335,19 +335,19 @@ module block_holes()
 	}
 
 	// Idler mounting holes and nut traps.
-	for (idle=[-1,1])
+	for (idle=[0,1])
 	{
 		translate([0,
 			idler_mounting_hole_up+motor_mount_translation[1],
-			wade_block_depth/2+idler_mounting_hole_across*idle])
+			wade_block_depth/2+idler_mounting_hole_across*(idle*2-1)])
 		rotate([0,90,0]) //ZYX for this block
 		{
 			rotate([0,0,30])
 			{
-				translate([0,0,-1])
-				cylinder(r=m3_diameter/2,h=wade_block_depth+6,$fn=6);	
-				translate([0,0,wade_block_width-idler_nut_trap_depth])
-				cylinder(r=m3_nut_diameter/2,h=idler_nut_thickness,$fn=6);	//need cones
+#				translate([0,0,idle*12.75-.01])   //change 6 to proper distance
+				cylinder(r1=m3_diameter/2,r2=0,h=m3_diameter/2,$fn=8);	
+//				translate([0,0,wade_block_width-idler_nut_trap_depth])
+//				cylinder(r=m3_nut_diameter/2,h=idler_nut_thickness,$fn=8);	//need cones
 			}
 		
 			translate([0,6.01,wade_block_width-idler_nut_trap_depth+idler_nut_thickness/2])   //nut trap
