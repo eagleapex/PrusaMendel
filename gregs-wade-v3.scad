@@ -188,10 +188,11 @@ module wade (hotend_mount=0)
 
 			motor_mount ();
 	
-		#	//molding plate block. should properly intersect with holes protruding above pour surface
-			translate([-35,-10,-5])
+			//molding plate block. this becomes the top surface of the pour
+		#	translate([-35,-10,-5])
 			cube([110,80,5]);
 		}
+	
 
 		block_holes();
 		motor_mount_holes ();
@@ -223,7 +224,7 @@ module block_holes()
 	render()
 	difference()
 	{
-		translate([-1,0,0])
+		translate([-1,0,01])
 		cube([block_bevel_r+1,block_bevel_r+1,wade_block_depth+2]);
 		translate([block_bevel_r,0,0])
 		cylinder(r=block_bevel_r,h=wade_block_depth+2,$fn=40);
