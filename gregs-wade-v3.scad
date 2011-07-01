@@ -59,7 +59,7 @@ hole_for_608=22.6;
 
 block_top_right=[wade_block_width,wade_block_height];
 
-layer_thickness=0.4;
+layer_thickness=0;
 filament_feed_hole_d=4;
 filament_diameter=3;
 filament_feed_hole_offset=filament_diameter+0.5;
@@ -260,9 +260,9 @@ module block_holes()
 		cylinder(r=block_bevel_r,h=base_thickness+4);
 	}
 
-	// Idler fulcrum hole.
+	// Idler fulcrum hole.   needs to be a cone
 	translate(idler_fulcrum+[0,0,0.4])
-	cylinder(r=m3_diameter/2,h=idler_short_side-2*idler_hinge_width-0.5,center=true,$fn=16);
+	cylinder(r=m3_diameter/2,h=idler_short_side-2*idler_hinge_width+0.5,center=true,$fn=16);
 
 	translate(idler_fulcrum+[0,0,idler_short_side/2-idler_hinge_width-1])
 	cylinder(r=m3_nut_diameter/2+0.25,h=1,$fn=40);
