@@ -189,7 +189,7 @@ module wade (hotend_mount=0)
 			motor_mount ();
 	
 			//molding plate block. this becomes the top surface of the pour
-		#	translate([-35,-10,-5])
+		%	translate([-35,-10,-5])
 			cube([110,80,5]);
 		}
 	
@@ -307,7 +307,7 @@ module block_holes()
 			translate([-13,0,9.5])
 			b608(h=wade_block_depth);
 		
-			translate([0,0,-1]) //hobbed gear hole. needs to protrude above poured face
+			translate([0,0,-3]) //hobbed gear hole. needs to protrude above poured face
 			cylinder(r=m8_clearance_hole/2,h=wade_block_width);	
 
 			// Filament feed.
