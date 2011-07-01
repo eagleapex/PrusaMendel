@@ -260,9 +260,9 @@ module block_holes()
 		cylinder(r=block_bevel_r,h=base_thickness+4);
 	}
 
-	// Idler fulcrum hole.   needs to be a cone
-	translate(idler_fulcrum+[0,0,0.4])
-	cylinder(r=m3_diameter/2,h=idler_short_side-2*idler_hinge_width+0.5,center=true,$fn=16);
+	// Idler fulcrum hole.   now a cone
+#	translate(idler_fulcrum+[0,0,-6.3])
+	cylinder(r1=m3_diameter/2,r2=0,h=m3_diameter/4,$fn=16);
 
 	translate(idler_fulcrum+[0,0,idler_short_side/2-idler_hinge_width-1])
 	cylinder(r=m3_nut_diameter/2+0.25,h=1,$fn=40);
@@ -290,7 +290,7 @@ module block_holes()
 				wade_block_height-motor_mount_translation[1]+1,
 				wade_block_depth]);
 		
-			translate([0,0,-1])
+			translate([0,0,])
 			b608(h=9);
 		
 			translate([0,0,20])
@@ -299,14 +299,14 @@ module block_holes()
 			translate([-13,0,9.5])
 			b608(h=wade_block_depth);
 		
-			translate([0,0,8+layer_height])
-			cylinder(r=m8_clearance_hole/2,h=wade_block_depth-(8+layer_height)+2);	
+			translate([0,0,8+1]) //hobbed gear hole/cone
+			cylinder(r1=m8_clearance_hole/2,r2=0,h=m8_clearance_hole/4);	
 
 			// Filament feed.
-			translate([-filament_feed_hole_offset,0,wade_block_depth/2])
-			rotate([90,0,0])
+			translate([-filament_feed_hole_offset,-34,wade_block_depth/2])
+			rotate([90,0,180])
 			rotate(360/16)
-			cylinder(r=filament_feed_hole_d/2,h=wade_block_depth*3,center=true,$fn=8);	
+			cylinder(r1=filament_feed_hole_d/2,r2=0,h=filament_feed_hole_d/2,$fn=8);	
 
 			// Mounting holes on the base.
 			for (mount=[0:1])
@@ -553,7 +553,7 @@ module malcolm_hotend_holes ()
 module groovemount_holes ()
 {
 	extruder_recess_d=16; 
-	extruder_recess_h=5.5;
+	extruder_recess_h=0; //was 5.5
 
 	// Recess in base
 	translate([0,0,-1])
