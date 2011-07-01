@@ -293,10 +293,14 @@ module block_holes()
 			import_stl("wade-large.stl");
 
 			// Open the top to remove overhangs and to provide access to the hobbing.
-			translate([-wade_block_width+2,0,9.5])
-			cube([wade_block_width,
-				wade_block_height-motor_mount_translation[1]+1,
+			difference()
+			{	
+				translate([-wade_block_width+2,0,9.5])
+				cube([wade_block_width,
+				wade_block_height-motor_mount_translation[1]+.01,
 				wade_block_depth]);
+				hobbed();
+			}
 		
 			translate([0,0,-1])  //bearing inclusion, protrudes above pour surface
 			b608(h=9);
@@ -309,11 +313,18 @@ module block_holes()
 			translate([0,0,20])
 			b608(h=9);
 		
-			translate([-13,0,9.5])
-			b608(h=wade_block_depth);
-		
-			translate([0,0,-3]) //hobbed gear hole. protrudes above poured face
-			cylinder(r=m8_clearance_hole/2,h=wade_block_width);	
+			difference()
+			{
+	#			translate([-13,0,9.5])
+				b608(h=wade_block_depth);
+				hobbed();
+			}
+
+			translate([0,0,9.5+m8_clearance_hole/2-.01]) 
+				hobbed();
+			translate([0,0,9.5+m8_clearance_hole/2]) //drill cone?
+			rotate([180,0,0])
+			cylinder(r1=m8_clearance_hole/2,r2=0,h=m8_clearance_hole/2);	
 
 			// Filament feed.
 			translate([-filament_feed_hole_offset,-34.01,wade_block_depth/2])
@@ -365,6 +376,11 @@ module block_holes()
 			}
 		}
 	}
+}
+
+module hobbed()  //hobbed gear hole.
+{			
+	cylinder(r=m8_clearance_hole/2,h=wade_block_width);	
 }
 
 module motor_mount()
