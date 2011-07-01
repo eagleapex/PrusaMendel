@@ -347,10 +347,10 @@ module block_holes()
 		{
 			rotate([0,0,30])
 			{
-				translate([0,0,idle*12.75-.01])   //change 6 to proper distance
+				translate([0,0,idle*12.75-.01])   
 				cylinder(r1=m3_diameter/2,r2=0,h=m3_diameter/2,$fn=8);	
 //				translate([0,0,wade_block_width-idler_nut_trap_depth])
-//				cylinder(r=m3_nut_diameter/2,h=idler_nut_thickness,$fn=8);	//need cones
+//				cylinder(r=m3_nut_diameter/2,h=idler_nut_thickness,$fn=8);	
 			}
 		
 			translate([0,6.01,wade_block_width-idler_nut_trap_depth+idler_nut_thickness/2])   //nut trap
@@ -380,16 +380,16 @@ module motor_mount_holes()  //design for cones
 	slot_right=2;
 
 	{
-		translate([0,0,motor_mount_thickness-.99]) //hole side, needs through hole
+#		translate([0,0,-2.99]) //hole side, needs through hole
 		for (hole=[0:2])
 		{
 			translate([motor_hole(hole)[0]-slot_left,motor_hole(hole)[1],0])
-			cylinder(h=radius/2,r2=radius,r1=0,$fn=16);
+			cylinder(h=motor_mount_thickness-screw_head_recess_depth+3,r=radius,$fn=16);
 			translate([motor_hole(hole)[0]+slot_right,motor_hole(hole)[1],0])
-			cylinder(h=radius/2,r2=radius,r1=0,$fn=16);
+			cylinder(h=motor_mount_thickness-screw_head_recess_depth+3,r=radius,$fn=16);
 
-//			translate([motor_hole(hole)[0]-slot_left,motor_hole(hole)[1]-radius,0])
-//			cube([slot_left+slot_right,radius*2,motor_mount_thickness-screw_head_recess_depth+1]);
+			translate([motor_hole(hole)[0]-slot_left,motor_hole(hole)[1]-radius,0])
+			cube([slot_left+slot_right,radius*2,motor_mount_thickness-screw_head_recess_depth+3]);
 		}
 
 //		translate([0,0,-1]) //recess side
