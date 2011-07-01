@@ -340,7 +340,7 @@ module block_holes()
 		translate([0,
 			idler_mounting_hole_up+motor_mount_translation[1],
 			wade_block_depth/2+idler_mounting_hole_across*idle])
-		rotate([0,90,0])
+		rotate([0,90,0]) //ZYX for this block
 		{
 			rotate([0,0,30])
 			{
@@ -349,8 +349,12 @@ module block_holes()
 				translate([0,0,wade_block_width-idler_nut_trap_depth])
 				cylinder(r=m3_nut_diameter/2,h=idler_nut_thickness,$fn=6);	//need cones
 			}
-			translate([0,10/2,wade_block_width-idler_nut_trap_depth+idler_nut_thickness/2])   //nut trap. turn to drilled hole?
-			cube([m3_nut_diameter*cos(30),10,idler_nut_thickness],center=true);
+		
+			translate([0,6.01,wade_block_width-idler_nut_trap_depth+idler_nut_thickness/2])   //nut trap
+			rotate([90,20,0])
+			{
+				cylinder(r1=m3_nut_diameter*cos(30)/2,r2=0,h=m3_nut_diameter*cos(30)/2);
+			}
 		}
 	}
 }
