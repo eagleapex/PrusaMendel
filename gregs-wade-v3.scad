@@ -298,8 +298,10 @@ module block_holes()
 				wade_block_height-motor_mount_translation[1]+1,
 				wade_block_depth]);
 		
-//			translate([0,0,])  //trapped bearing. need to be drilled?
-//			b608(h=9);
+			translate([0,0,])  //trapped bearing. need to be drilled?
+			b608(h=9);
+			translate([-hole_for_608/2,-hole_for_608/2,0])
+			cube([hole_for_608/2,hole_for_608,9]);
 		
 			translate([0,0,20])
 			b608(h=9);
@@ -380,7 +382,7 @@ module motor_mount_holes()  //design for cones
 	slot_right=2;
 
 	{
-#		translate([0,0,-2.99]) //hole side, needs through hole
+		translate([0,0,-2.99]) //hole side, needs through hole
 		for (hole=[0:2])
 		{
 			translate([motor_hole(hole)[0]-slot_left,motor_hole(hole)[1],0])
