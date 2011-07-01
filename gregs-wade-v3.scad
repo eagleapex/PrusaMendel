@@ -265,8 +265,8 @@ module block_holes()
 	}
 
 	// Idler fulcrum hole.   now a cone
-#	translate(idler_fulcrum+[0,0,-6.3])
-	cylinder(r1=m3_diameter/2,r2=0,h=m3_diameter/4,$fn=16);
+#	translate(idler_fulcrum+[0,0,4.45])
+	cylinder(r2=m3_diameter/2,r1=0,h=m3_diameter/4,$fn=16);
 
 	translate(idler_fulcrum+[0,0,idler_short_side/2-idler_hinge_width-1])
 	cylinder(r=m3_nut_diameter/2+0.25,h=1,$fn=40);
