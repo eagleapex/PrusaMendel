@@ -99,14 +99,15 @@ idler_long_side=idler_long_top+idler_long_bottom;
 
 module wade (hotend_mount=0)
 {
+	
+	//molding plate block. needs to move to properly intersect with holes protruding above pour surface
+%	translate([-35,-10,-5])
+	cube([110,80,5]);
+
 	difference ()
 	{
 		union()
 		{
-			//moldint plate block
-%			translate([-35,-10,-5])
-			cube([110,80,5]);
-
 			// The wade block.
 			cube([wade_block_width,wade_block_height,wade_block_depth]);
 
@@ -294,8 +295,8 @@ module block_holes()
 				wade_block_height-motor_mount_translation[1]+1,
 				wade_block_depth]);
 		
-			translate([0,0,])
-			b608(h=9);
+//			translate([0,0,])  //trapped bearing. need to be drilled?
+//			b608(h=9);
 		
 			translate([0,0,20])
 			b608(h=9);
@@ -303,8 +304,8 @@ module block_holes()
 			translate([-13,0,9.5])
 			b608(h=wade_block_depth);
 		
-			translate([0,0,8+1]) //hobbed gear hole/cone
-			cylinder(r1=m8_clearance_hole/2,r2=0,h=m8_clearance_hole/4);	
+			translate([0,0,-1]) //hobbed gear hole. needs to protrude above poured face
+			cylinder(r=m8_clearance_hole/2,h=wade_block_width);	
 
 			// Filament feed.
 			translate([-filament_feed_hole_offset,-34,wade_block_depth/2])
@@ -346,9 +347,9 @@ module block_holes()
 				translate([0,0,-1])
 				cylinder(r=m3_diameter/2,h=wade_block_depth+6,$fn=6);	
 				translate([0,0,wade_block_width-idler_nut_trap_depth])
-				cylinder(r=m3_nut_diameter/2,h=idler_nut_thickness,$fn=6);	
+				cylinder(r=m3_nut_diameter/2,h=idler_nut_thickness,$fn=6);	//need cones
 			}
-			translate([0,10/2,wade_block_width-idler_nut_trap_depth+idler_nut_thickness/2])
+			translate([0,10/2,wade_block_width-idler_nut_trap_depth+idler_nut_thickness/2])   //nut trap. turn to drilled hole?
 			cube([m3_nut_diameter*cos(30),10,idler_nut_thickness],center=true);
 		}
 	}
@@ -365,7 +366,7 @@ module motor_mount()
 	}
 }
 
-module motor_mount_holes()
+module motor_mount_holes()  //design for cones
 {
 	radius=4/2;
 	slot_left=1;
