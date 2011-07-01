@@ -47,7 +47,7 @@ nema17_width=1.7*25.4;
 nema17_support_d=nema17_width-nema17_hole_spacing;
 
 screw_head_recess_diameter=7.2;
-screw_head_recess_depth=0;
+screw_head_recess_depth=3;
 
 motor_mount_rotation=25;
 motor_mount_translation=[50.5,34,0];
@@ -59,7 +59,7 @@ hole_for_608=22.6;
 
 block_top_right=[wade_block_width,wade_block_height];
 
-layer_thickness=0;
+layer_thickness=0.4;
 filament_feed_hole_d=4;
 filament_diameter=3;
 filament_feed_hole_offset=filament_diameter+0.5;
@@ -99,8 +99,6 @@ idler_long_side=idler_long_top+idler_long_bottom;
 
 module wade (hotend_mount=0)
 {
-
-
 	difference ()
 	{
 		union()
@@ -164,54 +162,49 @@ module wade (hotend_mount=0)
 			}
 
 			// The idler hinge support.
-//			translate(idler_fulcrum)
-//			{
-//				rotate(-15)
-//				translate([-(idler_hinge_r+3),-idler_hinge_r-2,-wade_block_depth/2])
-//				cube([idler_hinge_r+3,
-//					idler_hinge_r*2+4,
-//					wade_block_depth/2-
-//					idler_short_side/2+
-//					idler_hinge_width+0.25+
-//					layer_thickness]);
-//				rotate(-15)
-//				translate([-(idler_hinge_r+3),-idler_hinge_r-2,
-//					-idler_short_side/2+idler_hinge_width+0.25])
-//				cube([idler_hinge_r+3+15,
-//					idler_hinge_r*2+4,
-//					layer_thickness]);
-//			}
+			translate(idler_fulcrum)
+			{
+				rotate(-15)
+				translate([-(idler_hinge_r+3),-idler_hinge_r-2,-wade_block_depth/2])
+				cube([idler_hinge_r+3,
+					idler_hinge_r*2+4,
+					wade_block_depth/2-
+					idler_short_side/2+
+					idler_hinge_width+0.25+
+					layer_thickness]);
+				rotate(-15)
+				translate([-(idler_hinge_r+3),-idler_hinge_r-2,
+					-idler_short_side/2+idler_hinge_width+0.25])
+				cube([idler_hinge_r+3+15,
+					idler_hinge_r*2+4,
+					layer_thickness]);
+			}
 
 			//The base.
 			translate([-base_leadout,0,0])
 			cube([base_length,base_thickness,wade_block_depth]);
 
 			motor_mount ();
-	
-			//molding plate block. this becomes the top surface of the pour
-			translate([-35,-10,-5])
-			cube([110,80,5]);
 		}
-	
 
 		block_holes();
 		motor_mount_holes ();
 
-//		translate([motor_mount_translation[0]-gear_separation-filament_feed_hole_offset,
-//			0,wade_block_depth/2])
-//		rotate([-90,0,0])
-//		{
-//			if (in_mask (hotend_mount,malcolm_hotend_mount))
-//				malcolm_hotend_holes ();
-//			if (in_mask (hotend_mount,groovemount))
-//				groovemount_holes ();
-//			if (in_mask (hotend_mount,peek_reprapsource_mount))
-//				peek_reprapsource_holes ();
-//			if (in_mask (hotend_mount,mendel_parts_v6_mount)) 
-//				mendel_parts_v6_hotend ();
-//			if (in_mask(hotend_mount,grrf_peek_mount_holes))
-//				grrf_peek_mount_holes();
-//		}
+		translate([motor_mount_translation[0]-gear_separation-filament_feed_hole_offset,
+			0,wade_block_depth/2])
+		rotate([-90,0,0])
+		{
+			if (in_mask (hotend_mount,malcolm_hotend_mount))
+				malcolm_hotend_holes ();
+			if (in_mask (hotend_mount,groovemount))
+				groovemount_holes ();
+			if (in_mask (hotend_mount,peek_reprapsource_mount))
+				peek_reprapsource_holes ();
+			if (in_mask (hotend_mount,mendel_parts_v6_mount)) 
+				mendel_parts_v6_hotend ();
+			if (in_mask(hotend_mount,grrf_peek_mount_holes))
+				grrf_peek_mount_holes();
+		}
 	}
 }
 
@@ -224,7 +217,7 @@ module block_holes()
 	render()
 	difference()
 	{
-		translate([-1,0,01])
+		translate([-1,0,0])
 		cube([block_bevel_r+1,block_bevel_r+1,wade_block_depth+2]);
 		translate([block_bevel_r,0,0])
 		cylinder(r=block_bevel_r,h=wade_block_depth+2,$fn=40);
@@ -256,24 +249,23 @@ module block_holes()
 	}
 
 	// Round the bottom front corner.
-//	removed for molding
-//	translate ([-base_leadout-base_thickness/2,-1,-2])
-//	render()
-//	difference() 
-//	{
-//		translate([-1,0,-1])
-//		cube([block_bevel_r+1,base_thickness+2,block_bevel_r+1]);
-//		rotate([-90,0,0])
-//		translate([block_bevel_r,-block_bevel_r,-1])
-//		cylinder(r=block_bevel_r,h=base_thickness+4);
-//	}
+	translate ([-base_leadout-base_thickness/2,-1,-2])
+	render()
+	difference() 
+	{
+		translate([-1,0,-1])
+		cube([block_bevel_r+1,base_thickness+2,block_bevel_r+1]);
+		rotate([-90,0,0])
+		translate([block_bevel_r,-block_bevel_r,-1])
+		cylinder(r=block_bevel_r,h=base_thickness+4);
+	}
 
-	// Idler fulcrum hole.   now a cone
-	translate(idler_fulcrum+[0,0,7-m3_diameter/3])
-	rotate([0,180,0]) cylinder(r1=m3_diameter/2,r2=0,h=m3_diameter/3,$fn=16);
+	// Idler fulcrum hole.
+	translate(idler_fulcrum+[0,0,0.4])
+	cylinder(r=m3_diameter/2,h=idler_short_side-2*idler_hinge_width-0.5,center=true,$fn=16);
 
 	translate(idler_fulcrum+[0,0,idler_short_side/2-idler_hinge_width-1])
-	cylinder(r1=m3_nut_diameter/2+.25,r2=m3_nut_diameter/2+1.25,h=1,$fn=40);
+	cylinder(r=m3_nut_diameter/2+0.25,h=1,$fn=40);
 
 	//Rounded cutout for idler hinge.
 	render()
@@ -293,55 +285,39 @@ module block_holes()
 			import_stl("wade-large.stl");
 
 			// Open the top to remove overhangs and to provide access to the hobbing.
-			difference()
-			{	
-				translate([-wade_block_width+2,0,9.5])
-				cube([wade_block_width,
-				wade_block_height-motor_mount_translation[1]+.01,
+			translate([-wade_block_width+2,0,9.5])
+			cube([wade_block_width,
+				wade_block_height-motor_mount_translation[1]+1,
 				wade_block_depth]);
-				hobbed();
-			}
 		
-			translate([0,0,-1])  //bearing inclusion, protrudes above pour surface
+			translate([0,0,-1])
 			b608(h=9);
-			translate([-hole_for_608/2,-hole_for_608/2,-1])
-			cube([hole_for_608/2,hole_for_608,9]);
-			translate([-hole_for_608/2,-hole_for_608/2,9/2-1]) //fillet
-			rotate([270,0,0])
-			cylinder(r=9/2,h=hole_for_608);
 		
 			translate([0,0,20])
 			b608(h=9);
 		
-			difference()
-			{
-				translate([-13,0,9.5])
-				b608(h=wade_block_depth);
-				hobbed();
-			}
-
-			translate([0,0,9.5+m8_clearance_hole/2-.01]) 
-				hobbed();
-			translate([0,0,9.5+m8_clearance_hole/2]) //drill cone?
-			rotate([180,0,0])
-			cylinder(r1=m8_clearance_hole/2,r2=0,h=m8_clearance_hole/2);	
+			translate([-13,0,9.5])
+			b608(h=wade_block_depth);
+		
+			translate([0,0,8+layer_height])
+			cylinder(r=m8_clearance_hole/2,h=wade_block_depth-(8+layer_height)+2);	
 
 			// Filament feed.
-			translate([-filament_feed_hole_offset,-34.01,wade_block_depth/2])
-			rotate([90,0,180])
+			translate([-filament_feed_hole_offset,0,wade_block_depth/2])
+			rotate([90,0,0])
 			rotate(360/16)
-			cylinder(r1=filament_feed_hole_d/2,r2=0,h=filament_feed_hole_d/2,$fn=8); 
+			cylinder(r=filament_feed_hole_d/2,h=wade_block_depth*3,center=true,$fn=8);	
 
 			// Mounting holes on the base.
 			for (mount=[0:1])
 			{
 				translate([-filament_feed_hole_offset+25*((mount<1)?1:-1),
-					-motor_mount_translation[1]-.01,wade_block_depth/2])
+					-motor_mount_translation[1]-1,wade_block_depth/2])
 				rotate([-90,0,0])
 				rotate(360/16)
-				cylinder(r1=m4_diameter/2,r2=0,h=m4_diameter/2,$fn=8);	
+				cylinder(r=m4_diameter/2,h=base_thickness+2,$fn=8);	
 	
-				translate([-filament_feed_hole_offset+25*((mount<1)?1:-1), //nut traps
+				translate([-filament_feed_hole_offset+25*((mount<1)?1:-1),
 					-motor_mount_translation[1]+base_thickness/2,
 					wade_block_depth/2])
 				rotate([-90,0,0])
@@ -354,33 +330,24 @@ module block_holes()
 	}
 
 	// Idler mounting holes and nut traps.
-	for (idle=[0,1])
+	for (idle=[-1,1])
 	{
 		translate([0,
 			idler_mounting_hole_up+motor_mount_translation[1],
-			wade_block_depth/2+idler_mounting_hole_across*(idle*2-1)])
-		rotate([0,90,0]) //ZYX for this block
+			wade_block_depth/2+idler_mounting_hole_across*idle])
+		rotate([0,90,0])
 		{
 			rotate([0,0,30])
 			{
-				translate([0,0,idle*12.75-.01])   
-				cylinder(r1=m3_diameter/2,r2=0,h=m3_diameter/2,$fn=8);	
-//				translate([0,0,wade_block_width-idler_nut_trap_depth])
-//				cylinder(r=m3_nut_diameter/2,h=idler_nut_thickness,$fn=8);	
+				translate([0,0,-1])
+				cylinder(r=m3_diameter/2,h=wade_block_depth+6,$fn=6);	
+				translate([0,0,wade_block_width-idler_nut_trap_depth])
+				cylinder(r=m3_nut_diameter/2,h=idler_nut_thickness,$fn=6);	
 			}
-		
-			translate([0,6.01,wade_block_width-idler_nut_trap_depth+idler_nut_thickness/2])   //nut trap
-			rotate([90,20,0])
-			{
-				cylinder(r1=m3_nut_diameter*cos(30)/2,r2=0,h=m3_nut_diameter*cos(30)/2);
-			}
+			translate([0,10/2,wade_block_width-idler_nut_trap_depth+idler_nut_thickness/2])
+			cube([m3_nut_diameter*cos(30),10,idler_nut_thickness],center=true);
 		}
 	}
-}
-
-module hobbed()  //hobbed gear hole.
-{			
-	cylinder(r=m8_clearance_hole/2,h=wade_block_width);	
 }
 
 module motor_mount()
@@ -394,41 +361,41 @@ module motor_mount()
 	}
 }
 
-module motor_mount_holes()  //design for cones
+module motor_mount_holes()
 {
 	radius=4/2;
 	slot_left=1;
 	slot_right=2;
 
 	{
-		translate([0,0,-2.99]) //hole side, needs through hole
+		translate([0,0,screw_head_recess_depth+layer_height])
 		for (hole=[0:2])
 		{
 			translate([motor_hole(hole)[0]-slot_left,motor_hole(hole)[1],0])
-			cylinder(h=motor_mount_thickness-screw_head_recess_depth+3,r=radius,$fn=16);
+			cylinder(h=motor_mount_thickness-screw_head_recess_depth,r=radius,$fn=16);
 			translate([motor_hole(hole)[0]+slot_right,motor_hole(hole)[1],0])
-			cylinder(h=motor_mount_thickness-screw_head_recess_depth+3,r=radius,$fn=16);
+			cylinder(h=motor_mount_thickness-screw_head_recess_depth,r=radius,$fn=16);
 
 			translate([motor_hole(hole)[0]-slot_left,motor_hole(hole)[1]-radius,0])
-			cube([slot_left+slot_right,radius*2,motor_mount_thickness-screw_head_recess_depth+3]);
+			cube([slot_left+slot_right,radius*2,motor_mount_thickness-screw_head_recess_depth]);
 		}
 
-//		translate([0,0,-1]) //recess side
-//		for (hole=[0:2])
-//		{
-//			translate([motor_hole(hole)[0]-slot_left,motor_hole(hole)[1],0])
-//			cylinder(h=screw_head_recess_depth+1,
-//				r=screw_head_recess_diameter/2,$fn=16);
-//			translate([motor_hole(hole)[0]+slot_right,motor_hole(hole)[1],0])
-//			cylinder(h=screw_head_recess_depth+1,
-//				r=screw_head_recess_diameter/2,$fn=16);
-//
-//			translate([motor_hole(hole)[0]-slot_left,
-//				motor_hole(hole)[1]-screw_head_recess_diameter/2,0])
-//			cube([slot_left+slot_right,
-//				screw_head_recess_diameter,
-//				screw_head_recess_depth+1]);
-//		}
+		translate([0,0,-1])
+		for (hole=[0:2])
+		{
+			translate([motor_hole(hole)[0]-slot_left,motor_hole(hole)[1],0])
+			cylinder(h=screw_head_recess_depth+1,
+				r=screw_head_recess_diameter/2,$fn=16);
+			translate([motor_hole(hole)[0]+slot_right,motor_hole(hole)[1],0])
+			cylinder(h=screw_head_recess_depth+1,
+				r=screw_head_recess_diameter/2,$fn=16);
+
+			translate([motor_hole(hole)[0]-slot_left,
+				motor_hole(hole)[1]-screw_head_recess_diameter/2,0])
+			cube([slot_left+slot_right,
+				screw_head_recess_diameter,
+				screw_head_recess_depth+1]);
+		}
 	}
 }
 
@@ -586,7 +553,7 @@ module malcolm_hotend_holes ()
 module groovemount_holes ()
 {
 	extruder_recess_d=16; 
-	extruder_recess_h=0; //was 5.5
+	extruder_recess_h=5.5;
 
 	// Recess in base
 	translate([0,0,-1])
@@ -621,14 +588,14 @@ module mendel_parts_v6_hotend ()
 	cylinder(r=extruder_recess_d/2,h=extruder_recess_h+1); 
 	
 	for(mount=[-1,1])
-	rotate([0,0,hole_axis_rotation+90+90*mount])
+	rotate([0,0,-hole_axis_rotation+90+90*mount])
 	translate([hole_separation/2,0,0])
 	{
 		translate([0,0,-1])
 		cylinder(r=m4_diameter/2,h=base_thickness+2,$fn=8);
 
 		translate([0,0,base_thickness/2])
-		rotate(-hole_axis_rotation+180)
+		rotate(hole_axis_rotation)
 		{
 //			rotate(30)
 			cylinder(r=m4_nut_diameter/2,h=base_thickness/2+hole_slot_height,$fn=6);
