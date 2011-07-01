@@ -197,21 +197,21 @@ module wade (hotend_mount=0)
 		block_holes();
 		motor_mount_holes ();
 
-		translate([motor_mount_translation[0]-gear_separation-filament_feed_hole_offset,
-			0,wade_block_depth/2])
-		rotate([-90,0,0])
-		{
-			if (in_mask (hotend_mount,malcolm_hotend_mount))
-				malcolm_hotend_holes ();
-			if (in_mask (hotend_mount,groovemount))
-				groovemount_holes ();
-			if (in_mask (hotend_mount,peek_reprapsource_mount))
-				peek_reprapsource_holes ();
-			if (in_mask (hotend_mount,mendel_parts_v6_mount)) 
-				mendel_parts_v6_hotend ();
-			if (in_mask(hotend_mount,grrf_peek_mount_holes))
-				grrf_peek_mount_holes();
-		}
+//		translate([motor_mount_translation[0]-gear_separation-filament_feed_hole_offset,
+//			0,wade_block_depth/2])
+//		rotate([-90,0,0])
+//		{
+//			if (in_mask (hotend_mount,malcolm_hotend_mount))
+//				malcolm_hotend_holes ();
+//			if (in_mask (hotend_mount,groovemount))
+//				groovemount_holes ();
+//			if (in_mask (hotend_mount,peek_reprapsource_mount))
+//				peek_reprapsource_holes ();
+//			if (in_mask (hotend_mount,mendel_parts_v6_mount)) 
+//				mendel_parts_v6_hotend ();
+//			if (in_mask(hotend_mount,grrf_peek_mount_holes))
+//				grrf_peek_mount_holes();
+//		}
 	}
 }
 
@@ -311,7 +311,7 @@ module block_holes()
 			cylinder(r=m8_clearance_hole/2,h=wade_block_width);	
 
 			// Filament feed.
-			translate([-filament_feed_hole_offset,-34,wade_block_depth/2])
+			translate([-filament_feed_hole_offset,-34.01,wade_block_depth/2])
 			rotate([90,0,180])
 			rotate(360/16)
 			cylinder(r1=filament_feed_hole_d/2,r2=0,h=filament_feed_hole_d/2,$fn=8);	
@@ -320,12 +320,12 @@ module block_holes()
 			for (mount=[0:1])
 			{
 				translate([-filament_feed_hole_offset+25*((mount<1)?1:-1),
-					-motor_mount_translation[1]-1,wade_block_depth/2])
+					-motor_mount_translation[1]-.01,wade_block_depth/2])
 				rotate([-90,0,0])
 				rotate(360/16)
-				cylinder(r=m4_diameter/2,h=base_thickness+2,$fn=8);	
+				cylinder(r1=m4_diameter/2,r2=0,h=m4_diameter/2,$fn=8);	
 	
-				translate([-filament_feed_hole_offset+25*((mount<1)?1:-1),
+				translate([-filament_feed_hole_offset+25*((mount<1)?1:-1), //nut traps
 					-motor_mount_translation[1]+base_thickness/2,
 					wade_block_depth/2])
 				rotate([-90,0,0])
