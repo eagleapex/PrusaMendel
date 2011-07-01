@@ -22,11 +22,11 @@ wade(hotend_mount=groovemount);
 //%import_stl("extruder-body.stl");
 
 //Place for printing
-//translate([78,-10,15.25])
-//rotate([0,-90,0])
+translate([80,-10,15.25])
+rotate([0,-90,0])
 
 //Place for assembly.
-//wadeidler(); 
+wadeidler(); 
 
 //import_stl("idler.stl");
 
@@ -190,7 +190,7 @@ module wade (hotend_mount=0)
 	
 			//molding plate block. this becomes the top surface of the pour
 			translate([-35,-10,-5])
-			cube([110,80,5]);
+			cube([120,80,5]);
 		}
 	
 
@@ -313,7 +313,7 @@ module block_holes()
 			translate([0,0,20])
 			b608(h=9);
 		
-			difference()
+	%		difference()
 			{
 				translate([-13,0,9.5])
 				b608(h=wade_block_depth);
