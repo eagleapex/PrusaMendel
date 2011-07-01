@@ -18,7 +18,7 @@ grrf_peek_mount_holes=32;
 //e.g. wade(hotend_mount=groovemount+peek_reprapsource_mount);
 
 
-wade(hotend_mount=mendel_parts_v6_mount);
+wade(hotend_mount=groovemount);
 //%import_stl("extruder-body.stl");
 
 //Place for printing
