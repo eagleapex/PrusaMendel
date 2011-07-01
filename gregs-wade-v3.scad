@@ -99,10 +99,7 @@ idler_long_side=idler_long_top+idler_long_bottom;
 
 module wade (hotend_mount=0)
 {
-	
-	//molding plate block. needs to move to properly intersect with holes protruding above pour surface
-	translate([-35,-10,-5])
-	cube([110,80,5]);
+
 
 	difference ()
 	{
@@ -190,6 +187,10 @@ module wade (hotend_mount=0)
 			cube([base_length,base_thickness,wade_block_depth]);
 
 			motor_mount ();
+	
+		#	//molding plate block. should properly intersect with holes protruding above pour surface
+			translate([-35,-10,-5])
+			cube([110,80,5]);
 		}
 
 		block_holes();
@@ -254,16 +255,17 @@ module block_holes()
 	}
 
 	// Round the bottom front corner.
-	translate ([-base_leadout-base_thickness/2,-1,-2])
-	render()
-	difference() 
-	{
-		translate([-1,0,-1])
-		cube([block_bevel_r+1,base_thickness+2,block_bevel_r+1]);
-		rotate([-90,0,0])
-		translate([block_bevel_r,-block_bevel_r,-1])
-		cylinder(r=block_bevel_r,h=base_thickness+4);
-	}
+//removed for molding
+//	translate ([-base_leadout-base_thickness/2,-1,-2])
+//	render()
+//	difference() 
+//	{
+//		translate([-1,0,-1])
+//		cube([block_bevel_r+1,base_thickness+2,block_bevel_r+1]);
+//		rotate([-90,0,0])
+//		translate([block_bevel_r,-block_bevel_r,-1])
+//		cylinder(r=block_bevel_r,h=base_thickness+4);
+//	}
 
 	// Idler fulcrum hole.   now a cone
 	translate(idler_fulcrum+[0,0,4.45])
@@ -344,7 +346,7 @@ module block_holes()
 		{
 			rotate([0,0,30])
 			{
-#				translate([0,0,idle*12.75-.01])   //change 6 to proper distance
+				translate([0,0,idle*12.75-.01])   //change 6 to proper distance
 				cylinder(r1=m3_diameter/2,r2=0,h=m3_diameter/2,$fn=8);	
 //				translate([0,0,wade_block_width-idler_nut_trap_depth])
 //				cylinder(r=m3_nut_diameter/2,h=idler_nut_thickness,$fn=8);	//need cones
