@@ -103,6 +103,10 @@ module wade (hotend_mount=0)
 	{
 		union()
 		{
+			//moldint plate block
+%			translate([-35,-10,-5])
+			cube([110,80,5]);
+
 			// The wade block.
 			cube([wade_block_width,wade_block_height,wade_block_depth]);
 
