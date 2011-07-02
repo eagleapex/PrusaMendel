@@ -105,9 +105,8 @@ module wade (hotend_mount=0)
 //sprue
 translate([48,10,0]) rotate([0,90,0])
 cylinder(r=1,h=6);
-#translate([60,44,0]) rotate([0,90,90])
+translate([60,44,0]) rotate([0,90,90])
 cylinder(r=1,h=6);
-
 
 //resevoir
 translate([20,60,-1])
