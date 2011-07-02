@@ -1,6 +1,6 @@
 // Greg's Wade Gears.
 // It is licensed under the Creative Commons - GNU GPL license. 
-// © 2010 by GregFrost
+//  2010 by GregFrost
 // Parametric extruder gears based on prusa git repo.
 // http://www.thingiverse.com/thing:6713
 
@@ -10,7 +10,7 @@ use <inc/parametric_involute_gear_v5.0.scad>
 translate([55,40,0]) 
 WadesL(); //this module call will make the large gear
 translate([15,60,0]) 
-WadesS(); //this module call will make the small gear
+%WadesS(); //this module call will make the small gear
 
 module WadesL(){
 	num_holes=7;
@@ -58,11 +58,12 @@ module WadesS(){
 			rim_thickness = 9,
 			hub_thickness = 18,
 			hub_diameter = 18,
-			bore_diameter = 5.25,
+			bore_diameter = 0, //was 5.25
 			circles=0);
 		translate([0,-5,17])cube([6.2,3,9],center = true);
-		translate([0,0,14])rotate([0,90,-90])rotate(30)cylinder(r=1.7,h=20);
-		translate([0,-5,14])rotate([0,90,-90])cylinder(r=6.2/2/cos(30),h=3,$fn=6,center=true);
+		translate([0,-9,14])rotate([0,90,90])rotate(30)
+			cylinder(r1=1.7,r2=0,h=2);
+		translate([0,-5,14])rotate([0,90,-90])cylinder(r1=6.2/2/cos(30),h=3,$fn=6,center=true);
 	}
 }
 

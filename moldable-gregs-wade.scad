@@ -7,6 +7,7 @@
 //this version made moldable by eagleapex, eagleapex.com
 
 include<configuration.scad>
+use <inc/parametric_involute_gear_v5.0.scad>
 
 // Define the hotend_mounting style you want by specifying hotend_mount=style1+style2 etc.
 //depracated in this use. drill your own hotend mount to match you thermal barier
@@ -101,23 +102,25 @@ idler_long_side=idler_long_top+idler_long_bottom;
 
 module wade (hotend_mount=0)
 {
-
-//sprue
-translate([48,10,0]) rotate([0,90,0])
-cylinder(r=1,h=6);
-translate([60,44,0]) rotate([0,90,90])
-cylinder(r=1,h=6);
-
-//resevoir
-translate([20,60,-1])
-cube([20,7,7]);
-translate([22,60,0]) rotate([90,0,0])
-cylinder(r=1,h=6);
-
 	difference ()
 	{
 		union()
 		{
+			
+			//sprue
+			translate([48,10,0]) rotate([0,90,0]) //near base
+			cylinder(r=1,h=6);
+			translate([60,44,0]) rotate([0,90,90]) //top of idler
+			cylinder(r=1,h=6);
+			translate([-18,48,0]) rotate([0,90,0]) //for gear
+			cylinder(r=1, h=20);
+			
+			//resevoir
+			translate([20,60,-1])
+			cube([20,7,7]);
+			translate([22,60,0]) rotate([90,0,0])
+			cylinder(r=1,h=6);
+
 			translate([80,-10,15]) rotate([0,-90,0]) wadeidler(); 
 
 			// The wade block.
@@ -206,8 +209,28 @@ cylinder(r=1,h=6);
 			//molding plate block. this becomes the top surface of the pour
 			translate([-35,-10,-5])
 			cube([120,80,5]);
+
+			//small gear
+			translate([-23,48,17.7]) rotate([0,180,0])
+			difference(){
+				gear (number_of_teeth=10,
+					circular_pitch=268,
+					gear_thickness = 9,
+					rim_thickness = 9,
+					hub_thickness = 18,
+					hub_diameter = 18,
+					bore_diameter = 0, //was 5.25
+					circles=0);
+				translate([0,-5,17])cube([6.2,3,7],center = true);
+				translate([0,-9,14])rotate([0,90,90])rotate(30)
+					cylinder(r1=1.7,r2=0,h=2);
+				translate([0,-5,14])rotate([0,90,-90])cylinder(r=6.2/2/cos(30),h=3,$fn=6,center=true);
+			}
+
 		} //end union
 	
+		translate([-23,48,-3]) cylinder(r=5.25/2,h=24);
+
 		//idler holes again, for protrusion above pour line
 		translate([80,-10,15]) rotate([0,-90,0])
 		for(idler_screw_hole=[-1,1])
@@ -328,10 +351,10 @@ module block_holes()
 			// Open the top to remove overhangs and to provide access to the hobbing.
 			difference()
 			{	
-				translate([-wade_block_width+2,0,9.5])
-				cube([wade_block_width,
+				translate([-wade_block_width+8,0,9.5])
+				cube([wade_block_width-6,
 				wade_block_height-motor_mount_translation[1]+.01,
-				wade_block_depth]);
+				wade_block_depth-9]);
 				cylinder(r=m8_clearance_hole/2+.5,h=wade_block_width);	
 			}
 		
