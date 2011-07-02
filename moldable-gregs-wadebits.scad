@@ -7,7 +7,7 @@
 include <configuration.scad>
 use <inc/parametric_involute_gear_v5.0.scad>
 
-translate([55,40,0]) 
+//translate([55,40,0]) 
 WadesL(); //this module call will make the large gear
 translate([15,60,0]) 
 %WadesS(); //this module call will make the small gear
@@ -48,6 +48,7 @@ color([0,0,1])
 			}
 		}
 	}
+translate([0,0,-2.5]) cube([75,75,5],center=true);
 }
 
 module WadesS(){
