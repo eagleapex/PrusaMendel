@@ -23,9 +23,9 @@ wade(hotend_mount=groovemount);
 
 //Place for printing
 //Place for assembly.  -now in union below
-translate([80,-10,15.25])
-rotate([0,-90,0])
-wadeidler(); 
+//translate([80,-10,15.25])
+//rotate([0,-90,0])
+//wadeidler(); 
 
 //import_stl("idler.stl");
 
@@ -100,12 +100,12 @@ module wade (hotend_mount=0)
 {
 
 
+
 	difference ()
 	{
 		union()
 		{
-			//wade idler
-			//translate([80,-10,15.25]) rotate([0,-90,0]) wadeidler(); 
+			translate([80,-10,15.25]) rotate([0,-90,0]) wadeidler(); 
 
 			// The wade block.
 			cube([wade_block_width,wade_block_height,wade_block_depth]);
@@ -190,9 +190,9 @@ module wade (hotend_mount=0)
 
 			motor_mount ();
 	
-//			//molding plate block. this becomes the top surface of the pour
-//			translate([-35,-10,-5])
-//			cube([120,80,5]);
+			//molding plate block. this becomes the top surface of the pour
+			translate([-35,-10,-5])
+			cube([120,80,5]);
 		}
 	
 
@@ -315,7 +315,7 @@ module block_holes()
 			translate([0,0,20])
 			b608(h=9);
 		
-	%		difference()
+			difference()
 			{
 				translate([-13,0,9.5])
 				b608(h=wade_block_depth);
@@ -490,17 +490,18 @@ module wadeidler()
 
 		//Fulcrum hole.
 		translate(idler_fulcrum)
+		translate([0,0,-idler_short_side/2-.01])
 		rotate(360/12)
-		cylinder(h=idler_short_side+2,r=m3_diameter/2-0.1,center=true,$fn=8);
+		cylinder(h=m3_diameter/3,r1=m3_diameter/2-0.1,r2=0,$fn=8);
 
 		//Nut trap for fulcrum screw.
-//		translate(idler_fulcrum+[0,0,idler_short_side/2-idler_hinge_width-1])
-//		rotate(360/16)
-//		cylinder(h=3,r=m3_nut_diameter/2,$fn=6);
+		translate(idler_fulcrum+[0,0,idler_short_side/2-idler_hinge_width-1])
+		rotate(360/16)
+		cylinder(h=3,r=m3_nut_diameter/2,$fn=6);
 
 		for(idler_screw_hole=[-1,1])
 		translate(idler_axis+[.01-idler_height,0,0])
-		{
+		{			
 			//Screw Holes.
 			translate([-1,idler_mounting_hole_up,
 				idler_screw_hole*idler_mounting_hole_across])
