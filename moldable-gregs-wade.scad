@@ -1,12 +1,15 @@
 // Greg's Wade Extruder. 
 // It is licensed under the Creative Commons - GNU GPL license. 
-//  2010 by GregFrost
+// © 2010 by GregFrost
 // Extruder based on prusa git repo.
 // http://www.thingiverse.com/thing:6713
+
+//this version made moldable by eagleapex, eagleapex.com
 
 include<configuration.scad>
 
 // Define the hotend_mounting style you want by specifying hotend_mount=style1+style2 etc.
+//depracated in this use. drill your own hotend mount to match you thermal barier
 malcolm_hotend_mount=1;
 groovemount=2;
 peek_reprapsource_mount=4;
@@ -99,7 +102,18 @@ idler_long_side=idler_long_top+idler_long_bottom;
 module wade (hotend_mount=0)
 {
 
+//sprue
+translate([48,10,0]) rotate([0,90,0])
+cylinder(r=1,h=6);
+#translate([60,44,0]) rotate([0,90,90])
+cylinder(r=1,h=6);
 
+
+//resevoir
+translate([20,60,-1])
+cube([20,7,7]);
+translate([22,60,0]) rotate([90,0,0])
+cylinder(r=1,h=6);
 
 	difference ()
 	{
