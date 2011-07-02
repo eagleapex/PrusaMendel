@@ -118,7 +118,7 @@ cylinder(r=1,h=6);
 	{
 		union()
 		{
-			translate([80,-10,15.25]) rotate([0,-90,0]) wadeidler(); 
+			translate([80,-10,15]) rotate([0,-90,0]) wadeidler(); 
 
 			// The wade block.
 			cube([wade_block_width,wade_block_height,wade_block_depth]);
@@ -206,8 +206,26 @@ cylinder(r=1,h=6);
 			//molding plate block. this becomes the top surface of the pour
 			translate([-35,-10,-5])
 			cube([120,80,5]);
-		}
+		} //end union
 	
+		//idler holes again, for protrusion above pour line
+		translate([80,-10,15]) rotate([0,-90,0])
+		for(idler_screw_hole=[-1,1])
+		translate(idler_axis+[.01-idler_height,0,0])
+		{			
+			//Screw Holes.
+			translate([-1,idler_mounting_hole_up,
+				idler_screw_hole*idler_mounting_hole_across])
+			rotate([0,90,0])
+			{
+				cylinder(r=idler_mounting_hole_diameter/2,h=idler_height+3,$fn=16);
+				translate([0,idler_mounting_hole_elongation,0])
+				cylinder(r=idler_mounting_hole_diameter/2,h=idler_height+3,$fn=16);
+				translate([-idler_mounting_hole_diameter/2,0,0])
+				cube([idler_mounting_hole_diameter,idler_mounting_hole_elongation,
+					idler_height+3]);
+			}
+		}
 
 		block_holes();
 		motor_mount_holes ();
@@ -227,7 +245,7 @@ cylinder(r=1,h=6);
 //			if (in_mask(hotend_mount,grrf_peek_mount_holes))
 //				grrf_peek_mount_holes();
 //		}
-	}
+	}//end difference
 }
 
 function in_mask (mask,value) = (mask % (value*2)) > (value-1); 
@@ -427,6 +445,7 @@ module motor_mount_holes()  //design for cones
 			translate([motor_hole(hole)[0]-slot_left,motor_hole(hole)[1]-radius,0])
 			cube([slot_left+slot_right,radius*2,motor_mount_thickness-screw_head_recess_depth+3]);
 		}
+
 
 //		translate([0,0,-1]) //recess side
 //		for (hole=[0:2])
