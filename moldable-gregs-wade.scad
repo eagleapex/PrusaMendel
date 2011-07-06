@@ -110,10 +110,10 @@ module wade (hotend_mount=0)
 			//sprue
 			translate([48,10,0]) rotate([0,90,0]) //near base
 			cylinder(r=1,h=6);
-			translate([60,44,0]) rotate([0,90,90]) //top of idler
-			cylinder(r=1,h=6);
-			translate([-18,48,0]) rotate([0,90,0]) //for gear
-			cylinder(r=1, h=20);
+			translate([60,37,0]) rotate([0,90,90]) //top of idler
+			cylinder(r=1,h=12);
+			translate([64,54,0]) rotate([0,90,0]) //for gear
+			cylinder(r=1, h=3);
 			
 			//resevoir
 			translate([20,60,-1])
@@ -121,7 +121,7 @@ module wade (hotend_mount=0)
 			translate([22,60,0]) rotate([90,0,0])
 			cylinder(r=1,h=6);
 
-			translate([80,-10,15]) rotate([0,-90,0]) wadeidler(); 
+			translate([80,-17,15]) rotate([0,-90,0]) wadeidler(); 
 
 			// The wade block.
 			cube([wade_block_width,wade_block_height,wade_block_depth]);
@@ -208,10 +208,10 @@ module wade (hotend_mount=0)
 	
 			//molding plate block. this becomes the top surface of the pour
 			translate([-35,-10,-5])
-			cube([120,80,5]);
+			cube([125,80,5]);
 
 			//small gear
-			translate([-23,48,17.7]) rotate([0,180,0])
+			translate([76,54,17.7]) rotate([0,180,0])
 			difference(){
 				gear (number_of_teeth=10,
 					circular_pitch=268,
@@ -229,10 +229,10 @@ module wade (hotend_mount=0)
 
 		} //end union
 	
-		translate([-23,48,-3]) cylinder(r=5.25/2,h=24);
+		translate([75,54,-3]) cylinder(r=5.25/2,h=24); //small gear hole
 
 		//idler holes again, for protrusion above pour line
-		translate([80,-10,15]) rotate([0,-90,0])
+		translate([80,-17,15]) rotate([0,-90,0])
 		for(idler_screw_hole=[-1,1])
 		translate(idler_axis+[.01-idler_height,0,0])
 		{			
